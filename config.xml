@@ -48,5 +48,5 @@
         <true/>
       </dict>
     </gap:config-file>
-    <plugin name="phonegap-plugin-barcodescanner" spec="^3.1.2"/>
+<gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.2.0" />
 </widget>
