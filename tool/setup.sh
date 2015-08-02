@@ -2,4 +2,4 @@
 cordova platforms add android
 cordova platforms add ios
 cordova platforms add browser
-cordova install
+
