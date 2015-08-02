@@ -41,8 +41,8 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  text-transform: uppercase;
   width: 100%;
+  text-transform: uppercase;
 }
 
 /* Portrait layout (default) */
@@ -67,6 +67,17 @@ body {
     margin: -90px 0px 0px -198px; /* offset vertical: half of image height */
     /* offset horizontal: half of image width and text area width */
   }
+}
+
+#log {
+  top: 60%;
+  text-transform: none;
+  font-size: 12px;
+  text-align: left;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  padding-left: 5px;
 }
 
 h1 {
