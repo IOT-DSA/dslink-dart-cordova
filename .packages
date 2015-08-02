@@ -1,4 +1,4 @@
-# Generate by pub on 2015-08-02 01:01:54.109.
+# Generate by pub on 2015-08-02 15:15:33.518.
 # This file contains a map from Dart package names to Dart package locations.
 # Dart tools, including the Dart VM and Dart analyzer, rely on the content.
 # AUTO GENERATED - DO NOT EDIT
@@ -6,7 +6,7 @@ args:file:///Users/alex/.pub-cache/hosted/pub.dartlang.org/args-0.13.2/lib/
 bignum:file:///Users/alex/.pub-cache/hosted/pub.dartlang.org/bignum-0.0.7/lib/
 cipher:file:///Users/alex/.pub-cache/hosted/pub.dartlang.org/cipher-0.7.1/lib/
 crypto:file:///Users/alex/.pub-cache/hosted/pub.dartlang.org/crypto-0.9.0/lib/
-dslink:file:///Users/alex/.pub-cache/git/dslink-307ef3c1f974b618687950ce740edb184f5cadbc/lib/
+dslink:file:///Users/alex/.pub-cache/git/dslink-4e34d6f3aa7fed2375a3768076059588871bbb30/lib/
 dslink_cordova:./lib/
 fixnum:file:///Users/alex/.pub-cache/hosted/pub.dartlang.org/fixnum-0.9.1+2/lib/
 logging:file:///Users/alex/.pub-cache/hosted/pub.dartlang.org/logging-0.11.1/lib/

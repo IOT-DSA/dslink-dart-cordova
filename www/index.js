@@ -19458,7 +19458,7 @@
               // returning from await.
               t1 = result;
               $.device0 = t1;
-              t1 = new B.LinkProvider(null, P.LinkedHashMap__makeLiteral(["Cordova", P.LinkedHashMap__makeLiteral(["Platform", L.createInitialValueNode("string", null, J.get$platform$x(t1)), "Version", L.createInitialValueNode("string", null, J.get$version$x($.device0))])]), null, false, null, null, null, "http://dglux.directcode.org/conn", "Cordova-", true, true, false);
+              t1 = new B.LinkProvider(null, P.LinkedHashMap__makeLiteral(["Cordova", P.LinkedHashMap__makeLiteral(["Platform", L.createInitialValueNode("string", null, J.get$platform$x(t1)), "Version", L.createInitialValueNode("string", null, J.get$version$x($.device0))])]), null, false, null, null, null, "http://rnd.iot-dsa.org/conn", "Cordova-", true, true, false);
               t1.dataStore = $.get$LocalDataStorage_INSTANCE();
               $.link = t1;
               $goto = 3;
@@ -20372,7 +20372,6 @@
         this.changes.addAll$1(0, J.where$1$ax(update.get$changes(), new L.ListController__onProfileUpdate_closure()));
         this._ready = true;
         this.onProfileUpdated$0();
-        Q.logger().fine$1("_onDefUpdated");
       }, "call$1", "get$_onProfileUpdate", 2, 0, 41],
       onProfileUpdated$0: function() {
         var t1, t2, t3, t4;
