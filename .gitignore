@@ -17,3 +17,4 @@ platforms/android
 platforms/browser
 platforms/ios
 plugins/cordova-*
+plugins/com.*

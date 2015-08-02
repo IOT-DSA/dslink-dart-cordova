@@ -28,15 +28,30 @@
                     ],
                     "QuartzCore.framework": [],
                     "CoreLocation.framework": [],
-                    "libz.dylib": [],
+                    "libz.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
                     "CFNetwork.framework": [
                         {
                             "xml": false,
                             "count": 1
                         }
                     ],
-                    "SystemConfiguration.framework": [],
-                    "MobileCoreServices.framework": [],
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
                     "WebKit.framework": [
                         {
                             "xml": false,
