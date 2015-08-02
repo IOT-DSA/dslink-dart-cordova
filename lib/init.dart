@@ -9,7 +9,7 @@ Device device;
 init() async {
   device = await Device.init();
 
-  link = new LinkProvider("http://dglux.directcode.org/conn", "Cordova-", defaultNodes: {
+  link = new LinkProvider("http://rnd.iot-dsa.org/conn", "Cordova-", defaultNodes: {
     "Cordova": {
       "Platform": createInitialValueNode("string", value: device.platform),
       "Version": createInitialValueNode("string", value: device.version)
