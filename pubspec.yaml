@@ -1,0 +1,6 @@
+name: dslink_cordova
+dependencies:
+  rikulo_gap:
+    git: https://github.com/rikulo/gap.git
+  dslink:
+    git: git://github.com/IOT-DSA/sdk-dslink-dart.git
