@@ -18,4 +18,4 @@ platforms/browser
 platforms/ios
 plugins/cordova-*
 *.map
-
+www/index.js
