@@ -20019,7 +20019,7 @@
               Q.logger().clearListeners$0();
               Q.logger().get$onRecord().listen$1(new L.init_closure(logElement));
               Q.logger().info$1("Initializing");
-              t1 = new B.LinkProvider(null, P.LinkedHashMap__makeLiteral(["Cordova", P.LinkedHashMap__makeLiteral(["Platform", L.createInitialValueNode("string", null, J.get$platform$x($.device0)), "Version", L.createInitialValueNode("string", null, J.get$version$x($.device0))])]), null, false, null, null, null, "https://rnd.iot-dsa.org/conn", "Cordova-", true, true, false);
+              t1 = new B.LinkProvider(null, P.LinkedHashMap__makeLiteral(["Cordova", P.LinkedHashMap__makeLiteral(["Platform", L.createInitialValueNode("string", null, J.get$platform$x($.device0)), "Version", L.createInitialValueNode("string", null, J.get$version$x($.device0))])]), null, false, null, null, null, "http://rnd.iot-dsa.org/conn", "Cordova-", true, true, false);
               t1.dataStore = $.get$LocalDataStorage_INSTANCE();
               $.link = t1;
               $goto = 3;

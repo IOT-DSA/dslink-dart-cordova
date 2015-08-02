@@ -43,5 +43,4 @@
     </dict>
   </gap:config-file>
   <gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.2.0" />
-  <preference name="phonegap-version" value="cli-5.1.1" />
 </widget>
