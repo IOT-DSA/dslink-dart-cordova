@@ -561,6 +561,9 @@
         },
         "cordova-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "com.telerik.plugins.wkwebview": {
+            "PACKAGE_NAME": "org.iot.dsa"
         }
     },
     "dependent_plugins": {}
