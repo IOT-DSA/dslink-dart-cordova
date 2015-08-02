@@ -25,4 +25,5 @@
     </platform>
     <plugin name="cordova-plugin-barcodescanner" spec="^0.7.0" />
     <plugin name="cordova-plugin-device" spec="^1.0.1" />
+    <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
 </widget>

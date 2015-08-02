@@ -26,6 +26,9 @@
         },
         "cordova-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "org.iot.dsa"
         }
     },
     "dependent_plugins": {}

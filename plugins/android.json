@@ -52,6 +52,16 @@
                             "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />",
                             "count": 1
                         }
+                    ],
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -547,6 +557,9 @@
             "PACKAGE_NAME": "org.iot.dsa"
         },
         "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "org.iot.dsa"
         }
     },
