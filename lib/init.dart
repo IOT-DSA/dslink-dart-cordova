@@ -11,8 +11,8 @@ init() async {
 
   link = new LinkProvider("http://dglux.directcode.org/conn", "Cordova-", defaultNodes: {
     "Cordova": {
-      "Platform": createValueNode("string", value: device.platform),
-      "Version": createValueNode("string", value: device.version)
+      "Platform": createInitialValueNode("string", value: device.platform),
+      "Version": createInitialValueNode("string", value: device.version)
     }
   });
   await link.connect();

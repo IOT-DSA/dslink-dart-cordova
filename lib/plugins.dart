@@ -1,6 +1,7 @@
 library dslink.mobile.plugins;
 
 import "dart:async";
+import "dart:html";
 
 import "package:dslink/browser.dart";
 import "package:dslink/nodes.dart";
@@ -9,6 +10,7 @@ import "dart:js" as js;
 import "dart:js" show JsObject, JsArray, JsFunction;
 
 part "src/plugins/barcode.dart";
+part "src/plugins/geolocation.dart";
 
 final List<Plugin> PLUGINS = [
   new BarcodeScannerPlugin()
@@ -29,7 +31,7 @@ abstract class Plugin {
 JsObject loadJsObject(String code) => js.context.callMethod("eval", [code]);
 JsObject toJsObject(value) => new JsObject.jsify(value);
 
-Map createValueNode(String type, {String name, dynamic value}) {
+Map createInitialValueNode(String type, {String name, dynamic value}) {
   var map = {
     r"$type": type
   };
@@ -46,6 +48,17 @@ Map createValueNode(String type, {String name, dynamic value}) {
 }
 
 SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> params), {bool table: false, params, results, String permission: "read"}) {
+  if (results is Map) {
+    var m = new Map.from(results);
+    results = [];
+    for (var k in m.keys) {
+      results.add({
+        "name": k,
+        "type": m[k]
+      });
+    }
+  }
+
   var map = {
     r"$invokable": permission,
     r"$result": table ? "table" : "values",
@@ -54,6 +67,21 @@ SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> para
   };
 
   var node = new SimpleActionNode(path, handler, link.provider);
+  node.load(map);
+  SimpleNodeProvider p = link.provider;
+
+  p.getOrCreateNode(new Path(path).parent.path);
+
+  p.setNode(path, node);
+  return node;
+}
+
+SimpleNode createValueNode(String path, String type, {String name}) {
+  var map = {
+    r"$name": name,
+    r"$type": type
+  };
+  var node = new SimpleNode(path, link.provider);
   node.load(map);
   SimpleNodeProvider p = link.provider;
 
