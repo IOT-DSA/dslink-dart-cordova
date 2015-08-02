@@ -33,5 +33,5 @@
     </gap:config-file>
     <!-- <gap:plugin name="cordova-plugin-device" spec="^1.0.1"/>
     <gap:plugin name="cordova-plugin-geolocation" spec="^1.0.1"/> -->
-    <gap:plugin name="cordova-plugin-barcodescanner" spec="^0.7.0"/>
+    <gap:plugin name="phonegap-plugin-barcodescanner" spec="^3.1.2"/>
 </widget>
