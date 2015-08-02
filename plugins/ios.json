@@ -70,12 +70,6 @@
                             "xml": "<string />",
                             "count": 1
                         }
-                    ],
-                    "NSAppTransportSecurity": [
-                        {
-                            "xml": "<dict>\r\n                <key>NSAllowsArbitraryLoads</key>\r\n                <true/>\r\n            </dict>",
-                            "count": 1
-                        }
                     ]
                 }
             }
