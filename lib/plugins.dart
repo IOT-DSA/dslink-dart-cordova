@@ -13,7 +13,8 @@ part "src/plugins/barcode.dart";
 part "src/plugins/geolocation.dart";
 
 final List<Plugin> PLUGINS = [
-  new BarcodeScannerPlugin()
+  new BarcodeScannerPlugin(),
+  new GeolocationPlugin()
 ];
 
 LinkProvider link;
@@ -47,7 +48,7 @@ Map createInitialValueNode(String type, {String name, dynamic value}) {
   return map;
 }
 
-SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> params), {bool table: false, params, results, String permission: "read"}) {
+SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> params), {String name, bool table: false, params, results, String permission: "read"}) {
   if (results is Map) {
     var m = new Map.from(results);
     results = [];
@@ -65,6 +66,10 @@ SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> para
     r"$params": params != null ? params : params,
     r"$columns": results != null ? results : results
   };
+
+  if (name != null) {
+    map[r"$name"] = name;
+  }
 
   var node = new SimpleActionNode(path, handler, link.provider);
   node.load(map);

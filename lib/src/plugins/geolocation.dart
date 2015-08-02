@@ -24,6 +24,6 @@ class GeolocationPlugin extends Plugin {
       "heading": "number",
       "speed": "number",
       "timestamp": "number"
-    });
+    }, name: "Get Position");
   }
 }

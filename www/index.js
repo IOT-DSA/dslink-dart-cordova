@@ -1807,7 +1807,7 @@
         message.fixed$length = Array;
         message[0] = J.toString$0(error);
         message[1] = stackTrace == null ? null : J.toString$0(stackTrace);
-        for (t2 = new P.LinkedHashSetIterator(t1, t1._collection$_modifications, null, null), t2._cell = t1._collection$_first; t2.moveNext$0();)
+        for (t2 = new P.LinkedHashSetIterator(t1, t1._collection$_modifications, null, null), t2._collection$_cell = t1._collection$_first; t2.moveNext$0();)
           J.send$1$x(t2._collection$_current, message);
       },
       eval$1: function(code) {
@@ -1894,7 +1894,7 @@
         if (t1 != null)
           t1.clear$0(0);
         for (t1 = this.ports, t2 = t1.get$values(t1), t2 = H.setRuntimeTypeInfo(new H.MappedIterator(null, J.get$iterator$ax(t2._iterable), t2._f), [H.getTypeArgumentByIndex(t2, 0), H.getTypeArgumentByIndex(t2, 1)]); t2.moveNext$0();)
-          t2.__internal$_current.__isolate_helper$_close$0();
+          t2._current.__isolate_helper$_close$0();
         t1.clear$0(0);
         this.weakPorts.clear$0(0);
         init.globalState.isolates.remove$1(0, this.id);
@@ -4374,7 +4374,7 @@
         var t1, t2;
         t1 = this._map;
         t2 = new H.LinkedHashMapKeyIterator(t1, t1._modifications, null, null);
-        t2.__js_helper$_cell = t1._first;
+        t2._cell = t1._first;
         return t2;
       },
       contains$1: function(_, element) {
@@ -4395,7 +4395,7 @@
       $isEfficientLength: 1
     },
     LinkedHashMapKeyIterator: {
-      "^": "Object;_map,_modifications,__js_helper$_cell,__js_helper$_current",
+      "^": "Object;_map,_modifications,_cell,__js_helper$_current",
       get$current: function() {
         return this.__js_helper$_current;
       },
@@ -4404,13 +4404,13 @@
         if (this._modifications !== t1._modifications)
           throw H.wrapException(new P.ConcurrentModificationError(t1));
         else {
-          t1 = this.__js_helper$_cell;
+          t1 = this._cell;
           if (t1 == null) {
             this.__js_helper$_current = null;
             return false;
           } else {
             this.__js_helper$_current = t1.hashMapCellKey;
-            this.__js_helper$_cell = t1._next;
+            this._cell = t1._next;
             return true;
           }
         }
@@ -9500,23 +9500,23 @@
         }}
     },
     ListIterator: {
-      "^": "Object;_iterable,__internal$_length,_index,__internal$_current",
+      "^": "Object;_iterable,_length,_index,_current",
       get$current: function() {
-        return this.__internal$_current;
+        return this._current;
       },
       moveNext$0: function() {
         var t1, t2, $length, t3;
         t1 = this._iterable;
         t2 = J.getInterceptor$asx(t1);
         $length = t2.get$length(t1);
-        if (this.__internal$_length !== $length)
+        if (this._length !== $length)
           throw H.wrapException(new P.ConcurrentModificationError(t1));
         t3 = this._index;
         if (t3 >= $length) {
-          this.__internal$_current = null;
+          this._current = null;
           return false;
         }
-        this.__internal$_current = t2.elementAt$1(t1, t3);
+        this._current = t2.elementAt$1(t1, t3);
         ++this._index;
         return true;
       }
@@ -9554,18 +9554,18 @@
       $isEfficientLength: 1
     },
     MappedIterator: {
-      "^": "Iterator;__internal$_current,_iterator,_f",
+      "^": "Iterator;_current,_iterator,_f",
       moveNext$0: function() {
         var t1 = this._iterator;
         if (t1.moveNext$0()) {
-          this.__internal$_current = this._f$1(t1.get$current());
+          this._current = this._f$1(t1.get$current());
           return true;
         }
-        this.__internal$_current = null;
+        this._current = null;
         return false;
       },
       get$current: function() {
-        return this.__internal$_current;
+        return this._current;
       },
       _f$1: function(arg0) {
         return this._f.call$1(arg0);
@@ -12153,6 +12153,11 @@
     LinkedHashMap_LinkedHashMap$identity: function($K, $V) {
       return H.setRuntimeTypeInfo(new P._LinkedIdentityHashMap(0, null, null, null, null, null, 0), [$K, $V]);
     },
+    LinkedHashMap_LinkedHashMap$from: function(other, $K, $V) {
+      var result = P.LinkedHashMap_LinkedHashMap(null, null, null, $K, $V);
+      other.forEach$1(0, new P.LinkedHashMap_LinkedHashMap$from_closure(result));
+      return result;
+    },
     LinkedHashSet_LinkedHashSet: function(equals, hashCode, isValidKey, $E) {
       return H.setRuntimeTypeInfo(new P._LinkedHashSet(0, null, null, null, null, null, 0), [$E]);
     },
@@ -12426,7 +12431,7 @@
       "^": "_HashSetBase;_collection$_length,_collection$_strings,_collection$_nums,_collection$_rest,_collection$_first,_collection$_last,_collection$_modifications",
       get$iterator: function(_) {
         var t1 = new P.LinkedHashSetIterator(this, this._collection$_modifications, null, null);
-        t1._cell = this._collection$_first;
+        t1._collection$_cell = this._collection$_first;
         return t1;
       },
       get$length: function(_) {
@@ -12644,7 +12649,7 @@
       "^": "Object;_collection$_element<,_collection$_next@,_collection$_previous@"
     },
     LinkedHashSetIterator: {
-      "^": "Object;_set,_collection$_modifications,_cell,_collection$_current",
+      "^": "Object;_set,_collection$_modifications,_collection$_cell,_collection$_current",
       get$current: function() {
         return this._collection$_current;
       },
@@ -12653,13 +12658,13 @@
         if (this._collection$_modifications !== t1._collection$_modifications)
           throw H.wrapException(new P.ConcurrentModificationError(t1));
         else {
-          t1 = this._cell;
+          t1 = this._collection$_cell;
           if (t1 == null) {
             this._collection$_current = null;
             return false;
           } else {
             this._collection$_current = t1.get$_collection$_element();
-            this._cell = this._cell.get$_collection$_next();
+            this._collection$_cell = this._collection$_cell.get$_collection$_next();
             return true;
           }
         }
@@ -12670,6 +12675,12 @@
     },
     IterableBase: {
       "^": "Iterable;"
+    },
+    LinkedHashMap_LinkedHashMap$from_closure: {
+      "^": "Closure:11;_captured_result_0",
+      call$2: function(k, v) {
+        this._captured_result_0.$indexSet(0, k, v);
+      }
     },
     LinkedList: {
       "^": "Iterable;_modificationCount,_collection$_length,_collection$_next@,_collection$_previous@",
@@ -16077,7 +16088,7 @@
       "%": "ApplicationCacheErrorEvent"
     },
     AreaElement: {
-      "^": "HtmlElement;",
+      "^": "HtmlElement;coords=",
       toString$0: function(receiver) {
         return String(receiver);
       },
@@ -16118,6 +16129,10 @@
     CompositionEvent: {
       "^": "UIEvent;data=",
       "%": "CompositionEvent"
+    },
+    Coordinates: {
+      "^": "Interceptor;accuracy=,altitude=,heading=,latitude=,longitude=,speed=",
+      "%": "Coordinates"
     },
     DeviceLightEvent: {
       "^": "Event;value=",
@@ -16336,6 +16351,73 @@
       "^": "HtmlElement;length=,name=",
       "%": "HTMLFormElement"
     },
+    Geolocation: {
+      "^": "Interceptor;",
+      getCurrentPosition$3$enableHighAccuracy$maximumAge$timeout: function(receiver, enableHighAccuracy, maximumAge, timeout) {
+        var options, completer, e, stacktrace, exception, t1;
+        options = P.LinkedHashMap__makeEmpty();
+        completer = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [W.Geoposition])), [W.Geoposition]);
+        try {
+          this._getCurrentPosition$3(receiver, new W.Geolocation_getCurrentPosition_closure(receiver, completer), new W.Geolocation_getCurrentPosition_closure0(completer), options);
+        } catch (exception) {
+          t1 = H.unwrapException(exception);
+          e = t1;
+          stacktrace = H.getTraceFromException(exception);
+          completer.completeError$2(e, stacktrace);
+        }
+        return completer.get$future();
+      },
+      getCurrentPosition$0: function($receiver) {
+        return this.getCurrentPosition$3$enableHighAccuracy$maximumAge$timeout($receiver, null, null, null);
+      },
+      _ensurePosition$1: function(receiver, domPosition) {
+        var exception;
+        try {
+          if (!!J.getInterceptor(domPosition).$isGeoposition)
+            return domPosition;
+        } catch (exception) {
+          H.unwrapException(exception);
+        }
+        return new W._GeopositionWrapper(domPosition);
+      },
+      _getCurrentPosition$3: function(receiver, successCallback, errorCallback, options) {
+        this._getCurrentPosition_1$3(receiver, successCallback, errorCallback, P.convertDartToNative_Dictionary(options));
+        return;
+      },
+      _getCurrentPosition_1$3: function(receiver, successCallback, errorCallback, options) {
+        return receiver.getCurrentPosition(H.convertDartClosureToJS(successCallback, 1), H.convertDartClosureToJS(errorCallback, 1), options);
+      },
+      "%": "Geolocation"
+    },
+    Geolocation_getCurrentPosition_closure: {
+      "^": "Closure:2;_html$_captured_this_0,_captured_completer_1",
+      call$1: [function(position) {
+        this._captured_completer_1.complete$1(0, C.Geolocation_methods._ensurePosition$1(this._html$_captured_this_0, position));
+      }, null, null, 2, 0, null, 37, "call"]
+    },
+    Geolocation_getCurrentPosition_closure0: {
+      "^": "Closure:2;_captured_completer_2",
+      call$1: [function(error) {
+        this._captured_completer_2.completeError$1(error);
+      }, null, null, 2, 0, null, 12, "call"]
+    },
+    _GeopositionWrapper: {
+      "^": "Object;_ptr",
+      get$coords: function(_) {
+        return this._ptr.coords;
+      },
+      get$timestamp: function(_) {
+        return this._ptr.timestamp;
+      },
+      $isGeoposition: 1,
+      $isInterceptor: 1
+    },
+    Geoposition: {
+      "^": "Interceptor;coords=,timestamp=",
+      $isGeoposition: 1,
+      $isObject: 1,
+      "%": "Geoposition"
+    },
     HtmlCollection: {
       "^": "Interceptor_ListMixin_ImmutableListMixin;",
       get$length: function(receiver) {
@@ -16419,7 +16501,7 @@
       "%": "XMLHttpRequest"
     },
     HttpRequest_request_closure: {
-      "^": "Closure:2;_html$_captured_completer_1,_captured_xhr_2",
+      "^": "Closure:2;_captured_completer_1,_captured_xhr_2",
       call$1: [function(e) {
         var t1, t2, accepted, unknownRedirect, t3;
         t1 = this._captured_xhr_2;
@@ -16429,7 +16511,7 @@
         accepted = t2 >= 200 && t2 < 300;
         unknownRedirect = t2 > 307 && t2 < 400;
         t2 = accepted || t2 === 0 || t2 === 304 || unknownRedirect;
-        t3 = this._html$_captured_completer_1;
+        t3 = this._captured_completer_1;
         if (t2)
           t3.complete$1(0, t1);
         else
@@ -16789,7 +16871,7 @@
       "^": "Closure:11;_html$_captured_this_0",
       call$2: [function(k, v) {
         this._html$_captured_this_0.setItem(k, v);
-      }, null, null, 4, 0, null, 25, 37, "call"]
+      }, null, null, 4, 0, null, 25, 38, "call"]
     },
     TextAreaElement: {
       "^": "HtmlElement;name=,value=",
@@ -17015,7 +17097,7 @@
       "^": "Closure:11;_html$_captured_this_0",
       call$2: [function(k, v) {
         this._html$_captured_this_0.$indexSet(0, k, v);
-      }, null, null, 4, 0, null, 25, 37, "call"]
+      }, null, null, 4, 0, null, 25, 38, "call"]
     },
     _ElementAttributeMap: {
       "^": "_AttributeMap;_element",
@@ -17120,22 +17202,22 @@
       $asIterable: null
     },
     FixedSizeListIterator: {
-      "^": "Object;_array,_length,_position,_current",
+      "^": "Object;_array,_html$_length,_position,_html$_current",
       moveNext$0: function() {
         var nextPosition, t1;
         nextPosition = this._position + 1;
-        t1 = this._length;
+        t1 = this._html$_length;
         if (nextPosition < t1) {
-          this._current = J.$index$asx(this._array, nextPosition);
+          this._html$_current = J.$index$asx(this._array, nextPosition);
           this._position = nextPosition;
           return true;
         }
-        this._current = null;
+        this._html$_current = null;
         this._position = t1;
         return false;
       },
       get$current: function() {
-        return this._current;
+        return this._html$_current;
       }
     },
     _DOMWindowCrossFrame: {
@@ -17411,7 +17493,7 @@
       }
       dartArgs = P.List_List$from(J.map$1$ax($arguments, P._convertToDart$closure()), true, null);
       return P._convertToJS(H.Primitives_applyFunctionWithPositionalArguments(callback, dartArgs));
-    }, null, null, 8, 0, null, 38, 39, 40, 41],
+    }, null, null, 8, 0, null, 39, 40, 41, 42],
     _defineProperty: function(o, $name, value) {
       var exception;
       if (Object.isExtensible(o) && !Object.prototype.hasOwnProperty.call(o, $name))
@@ -17442,7 +17524,7 @@
       if (!!t1.$isFunction)
         return P._getJsProxy(o, "$dart_jsFunction", new P._convertToJS_closure());
       return P._getJsProxy(o, "_$dart_jsObject", new P._convertToJS_closure0($.get$_dartProxyCtor()));
-    }, "call$1", "_convertToJS$closure", 2, 0, 2, 42],
+    }, "call$1", "_convertToJS$closure", 2, 0, 2, 43],
     _getJsProxy: function(o, propertyName, createProxy) {
       var jsProxy = P._getOwnProperty(o, propertyName);
       if (jsProxy == null) {
@@ -17470,7 +17552,7 @@
         else
           return P._wrapToDart(o);
       }
-    }, "call$1", "_convertToDart$closure", 2, 0, 58, 42],
+    }, "call$1", "_convertToDart$closure", 2, 0, 58, 43],
     _wrapToDart: function(o) {
       if (typeof o == "function")
         return P._getDartProxy(o, $.get$_DART_CLOSURE_PROPERTY_NAME(), new P._wrapToDart_closure());
@@ -18684,7 +18766,7 @@
         this._wsConnection._onDisconnectedCompleter.future.then$1(new Y.BrowserECDHLink_initWebsocket_closure1(this, reconnect));
       }, function() {
         return this.initWebsocket$1(true);
-      }, "initWebsocket$0", "call$1", "call$0", "get$initWebsocket", 0, 2, 30, 43, 44],
+      }, "initWebsocket$0", "call$1", "call$0", "get$initWebsocket", 0, 2, 30, 44, 45],
       close$0: function(_) {
         var t1;
         this._onConnectedCompleter = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
@@ -18730,7 +18812,7 @@
         t1 = t1._onRequesterReadyCompleter;
         if (t1.future._state === 0)
           t1.complete$1(0, t2);
-      }, null, null, 2, 0, null, 45, "call"]
+      }, null, null, 2, 0, null, 46, "call"]
     },
     BrowserECDHLink_initWebsocket_closure1: {
       "^": "Closure:2;_browser_client$_captured_this_2,_captured_reconnect_3",
@@ -18755,7 +18837,7 @@
           t1._wsDelay = 5;
           Q.DsTimer_timerOnceAfter(t1.get$initWebsocket(), 5000);
         }
-      }, null, null, 2, 0, null, 46, "call"]
+      }, null, null, 2, 0, null, 47, "call"]
     },
     WebSocketConnection: {
       "^": "Connection;_responderChannel,_requesterChannel,_onRequestReadyCompleter,_onDisconnectedCompleter,clientLink,socket,onConnect,pingTimer,_dataSent,_dataReceiveCount,_opened,_msgCommand,binaryInCache,binaryOutCache,msgId,_sending,_authError,pendingAcks",
@@ -18975,7 +19057,7 @@
           t1.cancel$0();
       }, function() {
         return this._browser_client$_onDone$1(null);
-      }, "_browser_client$_onDone$0", "call$1", "call$0", "get$_browser_client$_onDone", 0, 2, 34, 28, 42],
+      }, "_browser_client$_onDone$0", "call$1", "call$0", "get$_browser_client$_onDone", 0, 2, 34, 28, 43],
       close$0: function(_) {
         var t1, t2;
         t1 = this.socket;
@@ -19106,7 +19188,7 @@
           this.onDisconnected$0();
           this._common$_conn = null;
         }
-      }, "call$1", "get$_onDisconnected", 2, 0, 35, 47],
+      }, "call$1", "get$_onDisconnected", 2, 0, 35, 48],
       onReconnected$0: ["super$ConnectionHandler$onReconnected$0", function() {
         if (this._pendingSend)
           this._common$_conn.sendWhenReady$1(this);
@@ -19147,7 +19229,7 @@
       "^": "Closure:2;_common$_captured_this_0",
       call$1: [function(conn) {
         return this._common$_captured_this_0.onReconnected$0();
-      }, null, null, 2, 0, null, 47, "call"]
+      }, null, null, 2, 0, null, 48, "call"]
     },
     Node0: {
       "^": "Object;profile,attributes>,configs<,children>",
@@ -19376,7 +19458,7 @@
               // returning from await.
               t1 = result;
               $.device0 = t1;
-              t1 = new B.LinkProvider(null, P.LinkedHashMap__makeLiteral(["Cordova", P.LinkedHashMap__makeLiteral(["Platform", L.createValueNode("string", null, J.get$platform$x(t1)), "Version", L.createValueNode("string", null, J.get$version$x($.device0))])]), null, false, null, null, null, "http://dglux.directcode.org/conn", "Cordova-", true, true, false);
+              t1 = new B.LinkProvider(null, P.LinkedHashMap__makeLiteral(["Cordova", P.LinkedHashMap__makeLiteral(["Platform", L.createInitialValueNode("string", null, J.get$platform$x(t1)), "Version", L.createInitialValueNode("string", null, J.get$version$x($.device0))])]), null, false, null, null, null, "http://dglux.directcode.org/conn", "Cordova-", true, true, false);
               t1.dataStore = $.get$LocalDataStorage_INSTANCE();
               $.link = t1;
               $goto = 3;
@@ -19439,7 +19521,7 @@
               t1 = $.get$PLUGINS(), _i = 0;
             case 2:
               // for condition
-              if (!(_i < 1)) {
+              if (!(_i < 2)) {
                 // goto after for
                 $goto = 4;
                 break;
@@ -19465,11 +19547,39 @@
       }
       return H.asyncHelper(null, loadPlugins, completer, null);
     },
-    createValueNode: function(type, $name, value) {
+    createInitialValueNode: function(type, $name, value) {
       var map = P.LinkedHashMap__makeLiteral(["$type", type]);
       if (value != null)
         map.$indexSet(0, "?value", value);
       return map;
+    },
+    createActionNode: function(path, handler, params, permission, results, table) {
+      var m, t1, t2, k, map, t3, t4, t5, node, p;
+      if (!!J.getInterceptor(results).$isMap) {
+        m = P.LinkedHashMap_LinkedHashMap$from(results, null, null);
+        results = [];
+        for (t1 = H.setRuntimeTypeInfo(new H.LinkedHashMapKeyIterable(m), [H.getTypeArgumentByIndex(m, 0)])._map, t2 = new H.LinkedHashMapKeyIterator(t1, t1._modifications, null, null), t2._cell = t1._first; t2.moveNext$0();) {
+          k = t2.__js_helper$_current;
+          results.push(P.LinkedHashMap__makeLiteral(["name", k, "type", m.$index(0, k)]));
+        }
+      }
+      t1 = table ? "table" : "values";
+      map = P.LinkedHashMap__makeLiteral(["$invokable", permission, "$result", t1, "$params", params, "$columns", results]);
+      t1 = $.link.provider;
+      t2 = P.LinkedHashMap_LinkedHashMap(null, null, null, P.Function, P.$int);
+      t3 = P.LinkedHashMap__makeEmpty();
+      t4 = P.LinkedHashMap__makeLiteral(["$is", "node"]);
+      t5 = P.LinkedHashMap__makeEmpty();
+      node = new B.SimpleActionNode(handler, t1 == null ? $.SimpleNodeProvider_instance : t1, false, true, false, null, null, path, t2, null, null, t3, t4, t5);
+      node.load$1(0, map);
+      p = $.link.provider;
+      t1 = new O.Path(path, null, null, true);
+      t1._parse$0();
+      t1 = new O.Path(t1.parentPath, null, null, true);
+      t1._parse$0();
+      p.getOrCreateNode$1(t1.path);
+      p.setNode$2(path, node);
+      return node;
     },
     Plugin: {
       "^": "Object;"
@@ -19477,28 +19587,7 @@
     BarcodeScannerPlugin: {
       "^": "Plugin;",
       init$0: function() {
-        var scanner, t1, t2, t3, map, t4, t5, node, p;
-        scanner = $.get$context().callMethod$2("eval", ["cordova.plugins.barcodeScanner"]);
-        t1 = P.LinkedHashMap__makeLiteral(["name", "text", "type", "string"]);
-        t2 = P.LinkedHashMap__makeLiteral(["name", "format", "type", "string"]);
-        t3 = P.LinkedHashMap__makeLiteral(["name", "cancelled", "type", "bool"]);
-        map = P.LinkedHashMap__makeLiteral(["$invokable", "read", "$result", "values", "$params", null, "$columns", [t1, t2, t3]]);
-        t1 = $.link.provider;
-        t2 = P.LinkedHashMap_LinkedHashMap(null, null, null, P.Function, P.$int);
-        t3 = P.LinkedHashMap__makeEmpty();
-        t4 = P.LinkedHashMap__makeLiteral(["$is", "node"]);
-        t5 = P.LinkedHashMap__makeEmpty();
-        if (t1 == null)
-          t1 = $.SimpleNodeProvider_instance;
-        node = new B.SimpleActionNode(new L.BarcodeScannerPlugin_init_closure(scanner), t1, false, true, false, null, null, "/Barcodes/Scan", t2, null, null, t3, t4, t5);
-        node.load$1(0, map);
-        p = $.link.provider;
-        t5 = new O.Path("/Barcodes/Scan", null, null, true);
-        t5._parse$0();
-        t5 = new O.Path(t5.parentPath, null, null, true);
-        t5._parse$0();
-        p.getOrCreateNode$1(t5.path);
-        p.setNode$2("/Barcodes/Scan", node);
+        L.createActionNode("/Barcodes/Scan", new L.BarcodeScannerPlugin_init_closure($.get$context().callMethod$2("eval", ["cordova.plugins.barcodeScanner"])), null, "read", [P.LinkedHashMap__makeLiteral(["name", "text", "type", "string"]), P.LinkedHashMap__makeLiteral(["name", "format", "type", "string"]), P.LinkedHashMap__makeLiteral(["name", "cancelled", "type", "bool"])], false);
       }
     },
     BarcodeScannerPlugin_init_closure: {
@@ -19533,20 +19622,63 @@
             }
         }
         return H.asyncHelper(null, call$1, completer1, null);
-      }, null, null, 2, 0, null, 48, "call"]
+      }, null, null, 2, 0, null, 49, "call"]
     },
     BarcodeScannerPlugin_init__closure: {
-      "^": "Closure:37;_captured_completer_1",
+      "^": "Closure:37;_plugins$_captured_completer_1",
       call$1: [function(result) {
         var t1 = J.getInterceptor$asx(result);
-        this._captured_completer_1.complete$1(0, P.LinkedHashMap__makeLiteral(["text", t1.$index(result, "text"), "format", t1.$index(result, "format"), "cancelled", t1.$index(result, "cancelled")]));
+        this._plugins$_captured_completer_1.complete$1(0, P.LinkedHashMap__makeLiteral(["text", t1.$index(result, "text"), "format", t1.$index(result, "format"), "cancelled", t1.$index(result, "cancelled")]));
       }, null, null, 2, 0, null, 14, "call"]
     },
     BarcodeScannerPlugin_init__closure0: {
-      "^": "Closure:37;_captured_completer_2",
+      "^": "Closure:37;_plugins$_captured_completer_2",
       call$1: [function(error) {
-        this._captured_completer_2.completeError$1(error);
+        this._plugins$_captured_completer_2.completeError$1(error);
       }, null, null, 2, 0, null, 12, "call"]
+    },
+    GeolocationPlugin: {
+      "^": "Plugin;",
+      init$0: function() {
+        L.createActionNode("/Geolocation/getPosition", new L.GeolocationPlugin_init_closure(), null, "read", P.LinkedHashMap__makeLiteral(["latitude", "number", "longitude", "number", "altitude", "number", "accuracy", "number", "heading", "number", "speed", "number", "timestamp", "number"]), false);
+      }
+    },
+    GeolocationPlugin_init_closure: {
+      "^": "Closure:36;",
+      call$1: [function(params) {
+        var $goto = 0, completer = new P.Completer_Completer(), $returnValue, handler = 2, currentError, t1, position, c, t2;
+        function call$1(errorCode, result) {
+          if (errorCode === 1) {
+            currentError = result;
+            $goto = handler;
+          }
+          while (true)
+            switch ($goto) {
+              case 0:
+                // Function start
+                t1 = window.navigator.geolocation;
+                $goto = 3;
+                return H.asyncHelper((t1 && C.Geolocation_methods).getCurrentPosition$0(t1), call$1, completer);
+              case 3:
+                // returning from await.
+                position = result;
+                t1 = J.getInterceptor$x(position);
+                c = t1.get$coords(position);
+                t2 = J.getInterceptor$x(c);
+                $returnValue = P.LinkedHashMap__makeLiteral(["latitude", t2.get$latitude(c), "longitude", t2.get$longitude(c), "alitude", t2.get$altitude(c), "accuracy", t2.get$accuracy(c), "heading", t2.get$heading(c), "speed", t2.get$speed(c), "timestamp", t1.get$timestamp(position)]);
+                // goto return
+                $goto = 1;
+                break;
+              case 1:
+                // return
+                return H.asyncHelper($returnValue, 0, completer, null);
+              case 2:
+                // rethrow
+                return H.asyncHelper(currentError, 1, completer);
+            }
+        }
+        return H.asyncHelper(null, call$1, completer, null);
+      }, null, null, 2, 0, null, 49, "call"]
     }
   }], ["dslink.nodes", "package:dslink/nodes.dart",, B, {
     "^": "",
@@ -19879,7 +20011,7 @@
           this._captured_node_1.configs.$indexSet(0, n, v);
         else if (t1.startsWith$1(n, "@"))
           this._captured_node_1.attributes.$indexSet(0, n, v);
-      }, null, null, 4, 0, null, 23, 37, "call"]
+      }, null, null, 4, 0, null, 23, 38, "call"]
     },
     RemoteNodeCache: {
       "^": "Object;_nodes",
@@ -20094,7 +20226,7 @@
       call$1: [function(update) {
         this._requester$_captured_this_0.ready = !J.$eq(update.get$streamStatus(), "initialize");
         this._requester$_captured_callback_1.call$1(update);
-      }, null, null, 2, 0, null, 49, "call"]
+      }, null, null, 2, 0, null, 50, "call"]
     },
     ListController: {
       "^": "Object;node<,requester,_requester$_controller,request,disconnectTs,changes<,_profileLoader,_ready,_pendingRemoveDef",
@@ -20551,7 +20683,7 @@
               this._requests.$index(0, t2.$index(resp, "rid"))._update$1(resp);
           }
         }
-      }, "call$1", "get$onData", 2, 0, 45, 50],
+      }, "call$1", "get$onData", 2, 0, 45, 51],
       getSendingData$2: function(currentTime, waitingAckId) {
         var rslt = this.super$ConnectionHandler$getSendingData$2(currentTime, waitingAckId);
         this.lastSentId = this.nextRid - 1;
@@ -20762,7 +20894,7 @@
         return response;
       }, function(value, responder, response) {
         return this.setValue$4(value, responder, response, 4);
-      }, "setValue$3", null, null, "get$setValue", 6, 2, null, 51]
+      }, "setValue$3", null, null, "get$setValue", 6, 2, null, 52]
     },
     LocalNodeImpl_load_closure: {
       "^": "Closure:3;_box_0,_captured_this_1",
@@ -20927,7 +21059,7 @@
           if (!!J.getInterceptor(resp).$isMap)
             this._onReceiveRequest$1(resp);
         }
-      }, "call$1", "get$onData", 2, 0, 45, 50],
+      }, "call$1", "get$onData", 2, 0, 45, 51],
       _onReceiveRequest$1: function(m) {
         var t1, t2, t3, rid;
         t1 = J.getInterceptor$asx(m);
@@ -21387,7 +21519,7 @@
           if (t1._captured_updateIs_0 == null)
             t1._captured_updateIs_0 = ["$is", "node"];
         } else
-          for (t3 = this.changes, t4 = new P.LinkedHashSetIterator(t3, t3._collection$_modifications, null, null), t4._cell = t3._collection$_first, t3 = J.getInterceptor$x(t2); t4.moveNext$0();) {
+          for (t3 = this.changes, t4 = new P.LinkedHashSetIterator(t3, t3._collection$_modifications, null, null), t4._collection$_cell = t3._collection$_first, t3 = J.getInterceptor$x(t2); t4.moveNext$0();) {
             change = t4._collection$_current;
             t5 = J.getInterceptor$s(change);
             if (t5.startsWith$1(change, "$")) {
@@ -21520,7 +21652,7 @@
           this._lastWatingAckId = waitingAckId;
         }
         updates = [];
-        for (t1 = this.changed, t2 = new P.LinkedHashSetIterator(t1, t1._collection$_modifications, null, null), t2._cell = t1._collection$_first; t2.moveNext$0();)
+        for (t1 = this.changed, t2 = new P.LinkedHashSetIterator(t1, t1._collection$_modifications, null, null), t2._collection$_cell = t1._collection$_first; t2.moveNext$0();)
           C.JSArray_methods.addAll$1(updates, t2._collection$_current.process$0());
         this.responder.updateResponse$2(this, updates);
         t1.clear$0(0);
@@ -21579,7 +21711,7 @@
           t1.changed.add$1(0, this);
           t1.prepareSending$0();
         }
-      }, "call$1", "get$addValue", 2, 0, 49, 52],
+      }, "call$1", "get$addValue", 2, 0, 49, 53],
       mergeValues$0: function() {
         var t1, t2, t3, toRemove, rslt, i, rslt0, t4, t5;
         t1 = this.lastValues;
@@ -22066,7 +22198,7 @@
           this._captured_r_3.update$3([v], null, meta);
         } else
           throw H.wrapException(P.Exception_Exception("Unknown Value from Stream"));
-      }, null, null, 2, 0, null, 37, "call"]
+      }, null, null, 2, 0, null, 38, "call"]
     },
     SimpleNode_invoke_closure4: {
       "^": "Closure:0;_captured_r_4",
@@ -22085,7 +22217,7 @@
           H.unwrapException(exception);
         }
         this._captured_response_5.close$1(0, error);
-      }, null, null, 4, 0, null, 3, 53, "call"]
+      }, null, null, 4, 0, null, 3, 54, "call"]
     },
     SimpleNode_invoke_closure6: {
       "^": "Closure:2;_responder$_box_1",
@@ -22105,7 +22237,7 @@
           this._captured_list_7.push(v);
         else
           throw H.wrapException(P.Exception_Exception("Unknown Value from Stream"));
-      }, null, null, 2, 0, null, 37, "call"]
+      }, null, null, 2, 0, null, 38, "call"]
     },
     SimpleNode_invoke_closure8: {
       "^": "Closure:0;_captured_r_8,_captured_list_9",
@@ -22126,7 +22258,7 @@
           H.unwrapException(exception);
         }
         this._captured_response_10.close$1(0, error);
-      }, null, null, 4, 0, null, 3, 53, "call"]
+      }, null, null, 4, 0, null, 3, 54, "call"]
     },
     SimpleNode_invoke_closure10: {
       "^": "Closure:2;_captured_r_11",
@@ -22174,7 +22306,7 @@
           this._captured_r_14.update$3([v], null, meta);
         } else
           throw H.wrapException(P.Exception_Exception("Unknown Value from Stream"));
-      }, null, null, 2, 0, null, 37, "call"]
+      }, null, null, 2, 0, null, 38, "call"]
     },
     SimpleNode_invoke__closure1: {
       "^": "Closure:0;_captured_r_15",
@@ -22193,7 +22325,7 @@
           H.unwrapException(exception);
         }
         this._captured_response_16.close$1(0, error);
-      }, null, null, 4, 0, null, 3, 53, "call"]
+      }, null, null, 4, 0, null, 3, 54, "call"]
     },
     SimpleNode_invoke_closure12: {
       "^": "Closure:11;_captured_response_17",
@@ -22206,7 +22338,7 @@
           H.unwrapException(exception);
         }
         this._captured_response_17.close$1(0, error);
-      }, null, null, 4, 0, null, 3, 53, "call"]
+      }, null, null, 4, 0, null, 3, 54, "call"]
     },
     SimpleHiddenNode: {
       "^": "SimpleNode;provider,removed,serializable,_loaded,_listChangeController,_listReqListener,path,callbacks,_lastValueUpdate,profile,attributes,configs,children",
@@ -22781,7 +22913,7 @@
         return H.computeSignature(function(T) {
           return {func: 1, void: true, args: [[P.StreamSubscription, T]]};
         }, this.$receiver, "BroadcastStreamController");
-      }, 54],
+      }, 55],
       _onCancel$1: [function(subscription) {
         this._listening = false;
         if (this._onAllCancel != null) {
@@ -22795,7 +22927,7 @@
         return H.computeSignature(function(T) {
           return {func: 1, void: true, args: [[P.StreamSubscription, T]]};
         }, this.$receiver, "BroadcastStreamController");
-      }, 54],
+      }, 55],
       delayedCheckCancel$0: [function() {
         this._delayedCheckCanceling = false;
         if (!this._listening && this._listenState) {
@@ -22914,10 +23046,15 @@
           P.print(t1.get$error(record));
         if (record.get$stackTrace() != null)
           P.print(record.get$stackTrace());
-      }, null, null, 2, 0, null, 55, "call"]
+      }, null, null, 2, 0, null, 56, "call"]
     }
   }], ["html_common", "dart:html_common",, P, {
     "^": "",
+    convertDartToNative_Dictionary: function(dict) {
+      var object = {};
+      dict.forEach$1(0, new P.convertDartToNative_Dictionary_closure(object));
+      return object;
+    },
     convertNativeToDart_AcceptStructuredClone: function(object, mustCopy) {
       var copies = [];
       return new P.convertNativeToDart_AcceptStructuredClone_walk(mustCopy, new P.convertNativeToDart_AcceptStructuredClone_findSlot([], copies), new P.convertNativeToDart_AcceptStructuredClone_readSlot(copies), new P.convertNativeToDart_AcceptStructuredClone_writeSlot(copies)).call$1(object);
@@ -22934,6 +23071,12 @@
         $.Device__isWebKit = t1;
       }
       return t1;
+    },
+    convertDartToNative_Dictionary_closure: {
+      "^": "Closure:3;_captured_object_0",
+      call$2: function(key, value) {
+        this._captured_object_0[key] = value;
+      }
     },
     convertNativeToDart_AcceptStructuredClone_findSlot: {
       "^": "Closure:53;_captured_values_0,_captured_copies_1",
@@ -23788,6 +23931,7 @@
     return list;
   };
   var $ = Isolate.$isolateProperties;
+  C.Geolocation_methods = W.Geolocation.prototype;
   C.HtmlDocument_methods = W.HtmlDocument.prototype;
   C.HttpRequest_methods = W.HttpRequest.prototype;
   C.JSArray_methods = J.JSArray0.prototype;
@@ -24171,7 +24315,7 @@
   }, "invalidChar", "ValueUpdate_TIME_ZONE", "get$ValueUpdate_TIME_ZONE", function() {
     return new O.closure().call$0();
   }, "TIME_ZONE", "PLUGINS", "get$PLUGINS", function() {
-    return [new L.BarcodeScannerPlugin()];
+    return [new L.BarcodeScannerPlugin(), new L.GeolocationPlugin()];
   }, "PLUGINS", "_CRYPTO_PROVIDER", "get$_CRYPTO_PROVIDER", function() {
     return $.get$DartCryptoProvider_INSTANCE();
   }, "_CRYPTO_PROVIDER", "_secp256r1", "get$_secp256r1", function() {
@@ -24211,7 +24355,7 @@
   }, "_loggers"]);
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
-  init.metadata = ["invocation", "object", "sender", "e", "x", "closure", "isolate", "numberOfArguments", "arg1", "arg2", "arg3", "arg4", "error", "stackTrace", "result", "each", "key", "value", "a", "i", "w", "j", "c", "n", "p", "k", "preCompInfo", "y", null, "_", "data", "ignored", "element", "arg", "entry", 0, "byteString", "v", "callback", "captureThis", "self", "arguments", "o", true, "reconnect", "channel", "authError", "conn", "params", "update", "list", 4, "val", "stack", "subscription", "record"];
+  init.metadata = ["invocation", "object", "sender", "e", "x", "closure", "isolate", "numberOfArguments", "arg1", "arg2", "arg3", "arg4", "error", "stackTrace", "result", "each", "key", "value", "a", "i", "w", "j", "c", "n", "p", "k", "preCompInfo", "y", null, "_", "data", "ignored", "element", "arg", "entry", 0, "byteString", "position", "v", "callback", "captureThis", "self", "arguments", "o", true, "reconnect", "channel", "authError", "conn", "params", "update", "list", 4, "val", "stack", "subscription", "record"];
   init.types = [{func: 1}, {func: 1, void: true}, {func: 1, args: [,]}, {func: 1, args: [P.String,,]}, {func: 1, args: [, P.StackTrace]}, {func: 1, args: [, P.String]}, {func: 1, args: [P.String]}, {func: 1, ret: P.$int}, {func: 1, ret: Z.BigIntegerDartvm, args: [Z.BigIntegerDartvm]}, {func: 1, args: [,,,,,,]}, {func: 1, ret: Z.BigIntegerV8, args: [Z.BigIntegerV8]}, {func: 1, args: [,,]}, {func: 1, args: [P.$int]}, {func: 1, void: true, args: [,]}, {func: 1, args: [{func: 1, void: true}]}, {func: 1, void: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Future}, {func: 1, void: true, args: [,], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, ret: P.bool}, {func: 1, args: [P.bool]}, {func: 1, void: true, args: [, P.StackTrace]}, {func: 1, ret: P.$int, args: [, P.$int]}, {func: 1, void: true, args: [P.$int, P.$int]}, {func: 1, args: [P.Symbol,,]}, {func: 1, ret: P.String, args: [P.$int]}, {func: 1, ret: P.$int, args: [,,]}, {func: 1, void: true, args: [P.String]}, {func: 1, void: true, args: [P.String], opt: [,]}, {func: 1, ret: P.$int, args: [P.$int, P.$int]}, {func: 1, opt: [P.bool]}, {func: 1, void: true, args: [P.Timer]}, {func: 1, void: true, args: [W.Event]}, {func: 1, void: true, args: [W.MessageEvent]}, {func: 1, void: true, opt: [P.Object]}, {func: 1, void: true, args: [O.ConnectionChannel]}, {func: 1, ret: P.Future, args: [[P.Map, P.String,,]]}, {func: 1, args: [P.JsObject]}, {func: 1, args: [P.String, P.Map]}, {func: 1, args: [P.String, P.Object]}, {func: 1, args: [L.RequesterListUpdate]}, {func: 1, void: true, args: [L.RequesterListUpdate]}, {func: 1, void: true, args: [{func: 1, args: [,]}]}, {func: 1, args: [P.String, L.ReqSubscribeController]}, {func: 1, args: [P.$int, L.ReqSubscribeController]}, {func: 1, void: true, args: [P.List]}, {func: 1, ret: [P.Stream, L.RequesterListUpdate], args: [P.String]}, {func: 1, void: true, args: [P.Map]}, {func: 1, args: [, T.LocalNode]}, {func: 1, void: true, args: [O.ValueUpdate]}, {func: 1, args: [T.InvokeResponse, P.$int, P.$int, P.$int]}, {func: 1, args: [P.$int, Q.BinaryData]}, {func: 1, args: [P.Function]}, {func: 1, ret: P.$int, args: [,]}, {func: 1, args: [P.$int,,]}, {func: 1, ret: E.ECPoint, args: [E.ECPoint, Z.BigInteger, S.PreCompInfo]}, {func: 1, void: true, args: [{func: 1, void: true}]}, {func: 1, ret: P.bool, args: [,,]}, {func: 1, ret: P.Object, args: [,]}, {func: 1, ret: P.bool, args: [P.Object, P.Object]}, {func: 1, ret: P.$int, args: [P.Object]}];
   function convertToFastObject(properties) {
     function MyClass() {
