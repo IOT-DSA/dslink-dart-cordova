@@ -36,9 +36,13 @@ init() async {
     );
   });
 
-  logger.info("Initializing");
+  logger.info("Ready");
 
-  link = new LinkProvider("http://rnd.iot-dsa.org/conn", "Cordova-", defaultNodes: {
+  var pname = device.platform[0].toUpperCase() + device.platform.substring(1);
+  if (pname == "Ios") {
+    pname = "iOS";
+  }
+  link = new LinkProvider("http://rnd.iot-dsa.org/conn", "Cordova${pname}-", defaultNodes: {
     "Cordova": {
       "Platform": createInitialValueNode("string", value: device.platform),
       "Version": createInitialValueNode("string", value: device.version)
