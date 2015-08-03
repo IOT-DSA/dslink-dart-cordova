@@ -11,10 +11,12 @@ import "dart:js" show JsObject, JsArray, JsFunction;
 
 part "src/plugins/barcode.dart";
 part "src/plugins/geolocation.dart";
+part "src/plugins/vibrate.dart";
 
 final List<Plugin> PLUGINS = [
   new BarcodeScannerPlugin(),
-  new GeolocationPlugin()
+  new GeolocationPlugin(),
+  new VibratePlugin()
 ];
 
 LinkProvider link;
@@ -81,17 +83,42 @@ SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> para
   return node;
 }
 
-SimpleNode createValueNode(String path, String type, {String name}) {
+SimpleNode createValueNode(String path, String type, {String name, OnListenerStatusChange onListenChange}) {
   var map = {
     r"$name": name,
     r"$type": type
   };
-  var node = new SimpleNode(path, link.provider);
+  var node = new ValueNode(path);
   node.load(map);
+  node.onListenerStatusChange = onListenChange;
   SimpleNodeProvider p = link.provider;
 
   p.getOrCreateNode(new Path(path).parent.path);
 
   p.setNode(path, node);
   return node;
+}
+
+typedef OnListenerStatusChange(bool status);
+
+class ValueNode extends SimpleNode {
+  ValueNode(String path) : super(path, link.provider);
+
+  OnListenerStatusChange onListenerStatusChange;
+
+  @override
+  RespSubscribeListener subscribe(callback(ValueUpdate), [int cacheLevel = 1]) {
+    if (!hasSubscriber && onListenerStatusChange != null) {
+      onListenerStatusChange(true);
+    }
+    return super.subscribe(callback, cacheLevel);
+  }
+
+  @override
+  void unsubscribe(callback(ValueUpdate update)) {
+    super.unsubscribe(callback);
+    if (!hasSubscriber && onListenerStatusChange != null) {
+      onListenerStatusChange(false);
+    }
+  }
 }

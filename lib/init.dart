@@ -27,7 +27,7 @@ init() async {
   logger.clearListeners();
   logger.onRecord.listen((record) {
     var current = logElement.innerHtml;
-    var lines = current.split("<br/>").take(9).join("<br/>");
+    var lines = current.split("<br/>").take(4).join("<br/>");
     logElement.setInnerHtml(
       lines +
       "<br/>" +
