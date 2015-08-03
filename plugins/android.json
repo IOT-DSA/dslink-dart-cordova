@@ -10,10 +10,14 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
                         }
                     ],
@@ -60,6 +64,18 @@
                         },
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"android-package\" value=\"org.apache.cordova.deviceorientation.CompassListener\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"android-package\" value=\"org.apache.cordova.batterystatus.BatteryListener\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -563,6 +579,15 @@
             "PACKAGE_NAME": "org.iot.dsa"
         },
         "com.telerik.plugins.wkwebview": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-battery-status": {
             "PACKAGE_NAME": "org.iot.dsa"
         }
     },

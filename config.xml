@@ -1,47 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0" id="org.iot.dsa" version="0.0.1">
-  <name>DSA DSLink</name>
-  <description>DSLink for Cordova Mobile</description>
-  <author email="k.endfinger@gmail.com" href="http://iot-dsa.org">Kenneth Endfinger (DGLogik Inc.)</author>
-  <content src="index.html" />
-  <access origin="*" />
-  <allow-intent href="http://*/*" />
-  <allow-intent href="https://*/*" />
-  <allow-intent href="tel:*" />
-  <allow-intent href="sms:*" />
-  <allow-intent href="mailto:*" />
-  <allow-intent href="geo:*" />
-  <platform name="android">
-    <allow-intent href="market:*" />
-  </platform>
-  <platform name="ios">
-    <allow-intent href="itms:*" />
-    <allow-intent href="itms-apps:*" />
-  </platform>
-  <gap:plugin name="org.apache.cordova.battery-status" />
-  <gap:plugin name="org.apache.cordova.camera" />
-  <gap:plugin name="org.apache.cordova.media-capture" />
-  <gap:plugin name="org.apache.cordova.console" />
-  <gap:plugin name="org.apache.cordova.contacts" />
-  <gap:plugin name="org.apache.cordova.device" />
-  <gap:plugin name="org.apache.cordova.device-motion" />
-  <gap:plugin name="org.apache.cordova.device-orientation" />
-  <gap:plugin name="org.apache.cordova.dialogs" />
-  <gap:plugin name="org.apache.cordova.file" />
-  <gap:plugin name="org.apache.cordova.file-transfer" />
-  <gap:plugin name="org.apache.cordova.geolocation" />
-  <gap:plugin name="org.apache.cordova.globalization" />
-  <gap:plugin name="org.apache.cordova.inappbrowser" />
-  <gap:plugin name="org.apache.cordova.media" />
-  <gap:plugin name="org.apache.cordova.network-information" />
-  <gap:plugin name="org.apache.cordova.splashscreen" />
-  <gap:plugin name="org.apache.cordova.vibration" />
-  <gap:config-file platform="ios" parent="NSAppTransportSecurity" mode="add">
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true />
-    </dict>
-  </gap:config-file>
-  <gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.2.0" />
-  <gap:plugin name="com.telerik.plugins.wkwebview" version="0.4.0" source="plugins.cordova.io" />
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.iot.dsa" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>DSA DSLink</name>
+    <description>DSLink for Cordova Mobile</description>
+    <author email="k.endfinger@gmail.com" href="http://iot-dsa.org">Kenneth Endfinger (DGLogik Inc.)</author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <gap:plugin name="org.apache.cordova.camera" />
+    <gap:plugin name="org.apache.cordova.media-capture" />
+    <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.contacts" />
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.device-motion" />
+    <gap:plugin name="org.apache.cordova.device-orientation" />
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.file-transfer" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
+    <gap:plugin name="org.apache.cordova.globalization" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.media" />
+    <gap:plugin name="org.apache.cordova.network-information" />
+    <gap:plugin name="org.apache.cordova.splashscreen" />
+    <gap:plugin name="cordova-plugin-vibration" version="1.2.0" source="npm" />
+    <gap:config-file mode="add" parent="NSAppTransportSecurity" platform="ios">
+        <dict>
+            <key>NSAllowsArbitraryLoads</key>
+            <true />
+        </dict>
+    </gap:config-file>
+    <gap:plugin name="phonegap-plugin-barcodescanner" version="4.0.0" source="npm" />
+    <gap:plugin name="com.telerik.plugins.wkwebview" source="plugins.cordova.io" version="0.4.0" />
+    <gap:plugin name="org.apache.cordova.network-information" spec="^0.2.15" />
+    <gap:plugin name="cordova-plugin-battery-status" spec="^1.1.0" source="npm" />
 </widget>

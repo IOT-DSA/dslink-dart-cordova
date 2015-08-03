@@ -12,11 +12,15 @@ import "dart:js" show JsObject, JsArray, JsFunction;
 part "src/plugins/barcode.dart";
 part "src/plugins/geolocation.dart";
 part "src/plugins/vibrate.dart";
+part "src/plugins/compass.dart";
+part "src/plugins/battery.dart";
 
 final List<Plugin> PLUGINS = [
   new BarcodeScannerPlugin(),
   new GeolocationPlugin(),
-  new VibratePlugin()
+  new VibratePlugin(),
+  new CompassPlugin(),
+  new BatteryPlugin()
 ];
 
 LinkProvider link;

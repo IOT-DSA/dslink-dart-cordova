@@ -32,6 +32,15 @@
         },
         "com.telerik.plugins.wkwebview": {
             "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "org.iot.dsa"
         }
     },
     "dependent_plugins": {}

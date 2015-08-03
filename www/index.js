@@ -9831,6 +9831,19 @@
         return sync ? new P._NoCallbackSyncStreamController(null, 0, null) : new P._NoCallbackAsyncStreamController(null, 0, null);
       return sync ? H.setRuntimeTypeInfo(new P._SyncStreamController(onListen, onPause, onResume, onCancel, null, 0, null), [$T]) : H.setRuntimeTypeInfo(new P._AsyncStreamController(onListen, onPause, onResume, onCancel, null, 0, null), [$T]);
     },
+    StreamController_StreamController$broadcast: function(onCancel, onListen, sync, $T) {
+      var t1;
+      if (sync) {
+        t1 = H.setRuntimeTypeInfo(new P._SyncBroadcastStreamController(onListen, onCancel, 0, null, null, null, null), [$T]);
+        t1._async$_previous = t1;
+        t1._async$_next = t1;
+      } else {
+        t1 = H.setRuntimeTypeInfo(new P._AsyncBroadcastStreamController(onListen, onCancel, 0, null, null, null, null), [$T]);
+        t1._async$_previous = t1;
+        t1._async$_next = t1;
+      }
+      return t1;
+    },
     _runGuarded: function(notificationHandler) {
       var result, e, s, exception, t1;
       if (notificationHandler == null)
@@ -10049,12 +10062,12 @@
         }}
     },
     _BroadcastStream: {
-      "^": "_ControllerStream;_async$_controller"
+      "^": "_ControllerStream;_controller"
     },
     _BroadcastSubscription: {
-      "^": "_ControllerSubscription;_eventState@,_async$_next@,_async$_previous@,_async$_controller,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
-      get$_async$_controller: function() {
-        return this._async$_controller;
+      "^": "_ControllerSubscription;_eventState@,_async$_next@,_async$_previous@,_controller,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+      get$_controller: function() {
+        return this._controller;
       },
       _expectsEvent$1: function(eventId) {
         var t1 = this._eventState;
@@ -10141,7 +10154,7 @@
         this._async$_previous = subscription;
         subscription._eventState = this._state & 1;
         if (this._async$_next === subscription)
-          P._runGuarded(this._async$_onListen);
+          P._runGuarded(this._onListen);
         return subscription;
       },
       _recordCancel$1: function(subscription) {
@@ -10231,11 +10244,11 @@
       _callOnCancel$0: ["super$_BroadcastStreamController$_callOnCancel$0", function() {
         if ((this._state & 4) !== 0 && this._doneFuture._state === 0)
           this._doneFuture._asyncComplete$1(null);
-        P._runGuarded(this._async$_onCancel);
+        P._runGuarded(this._onCancel);
       }]
     },
     _SyncBroadcastStreamController: {
-      "^": "_BroadcastStreamController;_async$_onListen,_async$_onCancel,_state,_async$_next,_async$_previous,_addStreamState,_doneFuture",
+      "^": "_BroadcastStreamController;_onListen,_onCancel,_state,_async$_next,_async$_previous,_addStreamState,_doneFuture",
       get$_mayAddEvent: function() {
         return P._BroadcastStreamController.prototype.get$_mayAddEvent.call(this) && (this._state & 2) === 0;
       },
@@ -10303,8 +10316,29 @@
         }, this._async$_captured_this_0, "_SyncBroadcastStreamController");
       }
     },
+    _AsyncBroadcastStreamController: {
+      "^": "_BroadcastStreamController;_onListen,_onCancel,_state,_async$_next,_async$_previous,_addStreamState,_doneFuture",
+      _sendData$1: function(data) {
+        var link;
+        for (link = this._async$_next; link !== this; link = link.get$_async$_next())
+          link._addPending$1(new P._DelayedData(data, null));
+      },
+      _sendError$2: function(error, stackTrace) {
+        var link;
+        for (link = this._async$_next; link !== this; link = link.get$_async$_next())
+          link._addPending$1(new P._DelayedError(error, stackTrace, null));
+      },
+      _sendDone$0: function() {
+        var link = this._async$_next;
+        if (link !== this)
+          for (; link !== this; link = link.get$_async$_next())
+            link._addPending$1(C.C__DelayedDone);
+        else
+          this._doneFuture._asyncComplete$1(null);
+      }
+    },
     _AsBroadcastStreamController: {
-      "^": "_SyncBroadcastStreamController;_pending,_async$_onListen,_async$_onCancel,_state,_async$_next,_async$_previous,_addStreamState,_doneFuture",
+      "^": "_SyncBroadcastStreamController;_pending,_onListen,_onCancel,_state,_async$_next,_async$_previous,_addStreamState,_doneFuture",
       _addPendingEvent$1: function($event) {
         var t1 = this._pending;
         if (t1 == null) {
@@ -11180,10 +11214,10 @@
           result = this._varData.cancel$0();
         this._varData = null;
         this._state = this._state & 4294967286 | 2;
-        if (this.get$_async$_onCancel() != null)
+        if (this.get$_onCancel() != null)
           if (result == null)
             try {
-              result = this._async$_onCancel$0();
+              result = this._onCancel$0();
             } catch (exception) {
               t1 = H.unwrapException(exception);
               e = t1;
@@ -11193,7 +11227,7 @@
               result = result0;
             }
           else
-            result = result.whenComplete$1(this.get$_async$_onCancel());
+            result = result.whenComplete$1(this.get$_onCancel());
         t1 = new P._StreamController__recordCancel_complete(this);
         if (result != null)
           result = result.whenComplete$1(t1);
@@ -11215,7 +11249,7 @@
     _StreamController__subscribe_closure: {
       "^": "Closure:0;_async$_captured_this_0",
       call$0: function() {
-        P._runGuarded(this._async$_captured_this_0.get$_async$_onListen());
+        P._runGuarded(this._async$_captured_this_0.get$_onListen());
       }
     },
     _StreamController__recordCancel_complete: {
@@ -11251,18 +11285,18 @@
       }
     },
     _AsyncStreamController: {
-      "^": "_StreamController__AsyncStreamControllerDispatch;_async$_onListen<,_onPause<,_onResume<,_async$_onCancel<,_varData,_state,_doneFuture",
-      _async$_onCancel$0: function() {
-        return this._async$_onCancel.call$0();
+      "^": "_StreamController__AsyncStreamControllerDispatch;_onListen<,_onPause<,_onResume<,_onCancel<,_varData,_state,_doneFuture",
+      _onCancel$0: function() {
+        return this._onCancel.call$0();
       }
     },
     _StreamController__AsyncStreamControllerDispatch: {
       "^": "_StreamController+_AsyncStreamControllerDispatch;"
     },
     _SyncStreamController: {
-      "^": "_StreamController__SyncStreamControllerDispatch;_async$_onListen<,_onPause<,_onResume<,_async$_onCancel<,_varData,_state,_doneFuture",
-      _async$_onCancel$0: function() {
-        return this._async$_onCancel.call$0();
+      "^": "_StreamController__SyncStreamControllerDispatch;_onListen<,_onPause<,_onResume<,_onCancel<,_varData,_state,_doneFuture",
+      _onCancel$0: function() {
+        return this._onCancel.call$0();
       }
     },
     _StreamController__SyncStreamControllerDispatch: {
@@ -11270,7 +11304,7 @@
     },
     _NoCallbacks: {
       "^": "Object;",
-      get$_async$_onListen: function() {
+      get$_onListen: function() {
         return;
       },
       get$_onPause: function() {
@@ -11279,11 +11313,11 @@
       get$_onResume: function() {
         return;
       },
-      get$_async$_onCancel: function() {
+      get$_onCancel: function() {
         return;
       },
-      _async$_onCancel$0: function() {
-        return this.get$_async$_onCancel().call$0();
+      _onCancel$0: function() {
+        return this.get$_onCancel().call$0();
       }
     },
     _NoCallbackAsyncStreamController: {
@@ -11301,12 +11335,12 @@
       $as_StreamController: functionThatReturnsNull
     },
     _ControllerStream: {
-      "^": "_StreamImpl;_async$_controller",
+      "^": "_StreamImpl;_controller",
       _createSubscription$4: function(onData, onError, onDone, cancelOnError) {
-        return this._async$_controller._subscribe$4(onData, onError, onDone, cancelOnError);
+        return this._controller._subscribe$4(onData, onError, onDone, cancelOnError);
       },
       get$hashCode: function(_) {
-        return (H.Primitives_objectHashCode(this._async$_controller) ^ 892482866) >>> 0;
+        return (H.Primitives_objectHashCode(this._controller) ^ 892482866) >>> 0;
       },
       $eq: function(_, other) {
         if (other == null)
@@ -11315,19 +11349,19 @@
           return true;
         if (!(other instanceof P._ControllerStream))
           return false;
-        return other._async$_controller === this._async$_controller;
+        return other._controller === this._controller;
       }
     },
     _ControllerSubscription: {
-      "^": "_BufferingStreamSubscription;_async$_controller<,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
-      _async$_onCancel$0: function() {
-        return this.get$_async$_controller()._recordCancel$1(this);
+      "^": "_BufferingStreamSubscription;_controller<,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+      _onCancel$0: function() {
+        return this.get$_controller()._recordCancel$1(this);
       },
       _onPause$0: [function() {
-        this.get$_async$_controller()._recordPause$1(this);
+        this.get$_controller()._recordPause$1(this);
       }, "call$0", "get$_onPause", 0, 0, 1],
       _onResume$0: [function() {
-        this.get$_async$_controller()._recordResume$1(this);
+        this.get$_controller()._recordResume$1(this);
       }, "call$0", "get$_onResume", 0, 0, 1]
     },
     _EventSink: {
@@ -11402,7 +11436,7 @@
           this._pending.cancelSchedule$0();
         if ((this._state & 32) === 0)
           this._pending = null;
-        this._cancelFuture = this._async$_onCancel$0();
+        this._cancelFuture = this._onCancel$0();
       },
       _async$_add$1: ["super$_BufferingStreamSubscription$_async$_add$1", function(data) {
         var t1 = this._state;
@@ -11437,7 +11471,7 @@
       }, "call$0", "get$_onPause", 0, 0, 1],
       _onResume$0: [function() {
       }, "call$0", "get$_onResume", 0, 0, 1],
-      _async$_onCancel$0: function() {
+      _onCancel$0: function() {
         return;
       },
       _addPending$1: function($event) {
@@ -11732,10 +11766,10 @@
       }, "call$0", "get$_sendDone", 0, 0, 1]
     },
     _AsBroadcastStream: {
-      "^": "Stream;_async$_source,_onListenHandler,_onCancelHandler,_zone<,_async$_controller,_subscription",
+      "^": "Stream;_async$_source,_onListenHandler,_onCancelHandler,_zone<,_controller,_subscription",
       listen$4$cancelOnError$onDone$onError: function(onData, cancelOnError, onDone, onError) {
         var t1, t2, t3;
-        t1 = this._async$_controller;
+        t1 = this._controller;
         if (t1 == null || (t1._state & 4) !== 0) {
           t1 = new P._DoneStreamSubscription($.Zone__current, 0, onDone);
           t1.$builtinTypeInfo = this.$builtinTypeInfo;
@@ -11744,18 +11778,18 @@
         }
         if (this._subscription == null) {
           t1 = t1.get$add(t1);
-          t2 = this._async$_controller.get$addError();
-          t3 = this._async$_controller;
+          t2 = this._controller.get$addError();
+          t3 = this._controller;
           this._subscription = this._async$_source.listen$3$onDone$onError(t1, t3.get$close(t3), t2);
         }
-        return this._async$_controller._subscribe$4(onData, onError, onDone, true === cancelOnError);
+        return this._controller._subscribe$4(onData, onError, onDone, true === cancelOnError);
       },
       listen$3$onDone$onError: function(onData, onDone, onError) {
         return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
       },
-      _async$_onCancel$0: [function() {
+      _onCancel$0: [function() {
         var t1, shutdown;
-        t1 = this._async$_controller;
+        t1 = this._controller;
         shutdown = t1 == null || (t1._state & 4) !== 0;
         this._zone.runUnary$2(this._onCancelHandler, H.setRuntimeTypeInfo(new P._BroadcastSubscriptionWrapper(this), [null]));
         if (shutdown) {
@@ -11765,10 +11799,10 @@
             this._subscription = null;
           }
         }
-      }, "call$0", "get$_async$_onCancel", 0, 0, 1],
-      _async$_onListen$0: [function() {
+      }, "call$0", "get$_onCancel", 0, 0, 1],
+      _onListen$0: [function() {
         this._zone.runUnary$2(this._onListenHandler, H.setRuntimeTypeInfo(new P._BroadcastSubscriptionWrapper(this), [null]));
-      }, "call$0", "get$_async$_onListen", 0, 0, 1],
+      }, "call$0", "get$_onListen", 0, 0, 1],
       get$_isSubscriptionPaused: function() {
         var t1 = this._subscription;
         if (t1 == null)
@@ -11777,9 +11811,9 @@
       }
     },
     _BroadcastSubscriptionWrapper: {
-      "^": "Object;_async$_stream",
+      "^": "Object;_stream",
       get$isPaused: function() {
-        return this._async$_stream.get$_isSubscriptionPaused();
+        return this._stream.get$_isSubscriptionPaused();
       }
     },
     _StreamIteratorImpl: {
@@ -11871,7 +11905,7 @@
       }
     },
     _ForwardingStreamSubscription: {
-      "^": "_BufferingStreamSubscription;_async$_stream,_subscription,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+      "^": "_BufferingStreamSubscription;_stream,_subscription,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
       _async$_add$1: function(data) {
         if ((this._state & 2) !== 0)
           return;
@@ -11894,7 +11928,7 @@
           return;
         t1.resume$0();
       }, "call$0", "get$_onResume", 0, 0, 1],
-      _async$_onCancel$0: function() {
+      _onCancel$0: function() {
         var t1 = this._subscription;
         if (t1 != null) {
           this._subscription = null;
@@ -11903,7 +11937,7 @@
         return;
       },
       _handleData$1: [function(data) {
-        this._async$_stream._handleData$2(data, this);
+        this._stream._handleData$2(data, this);
       }, "call$1", "get$_handleData", 2, 0, function() {
         return H.computeSignature(function(S, T) {
           return {func: 1, void: true, args: [S]};
@@ -11919,7 +11953,7 @@
         var t1, t2;
         t1 = this.get$_handleData();
         t2 = this.get$_handleError();
-        this._subscription = this._async$_stream._async$_source.listen$3$onDone$onError(t1, this.get$_handleDone(), t2);
+        this._subscription = this._stream._async$_source.listen$3$onDone$onError(t1, this.get$_handleDone(), t2);
       },
       $as_BufferingStreamSubscription: function($S, $T) {
         return [$T];
@@ -14484,11 +14518,11 @@
       return P.String__stringFromIterable(charCodes, start, end);
     },
     NoSuchMethodError_toString_closure: {
-      "^": "Closure:24;_core$_box_0,_captured_sb_1",
+      "^": "Closure:24;_box_0,_captured_sb_1",
       call$2: function(key, value) {
         var t1, t2, t3;
         t1 = this._captured_sb_1;
-        t2 = this._core$_box_0;
+        t2 = this._box_0;
         t1._contents += t2._captured_comma_0;
         t3 = t1._contents += H.S(key.get$_name());
         t1._contents = t3 + ": ";
@@ -15994,10 +16028,10 @@
         }}
     },
     Uri_parse_parseAuth: {
-      "^": "Closure:1;_core$_box_0,_captured_uri_1,_captured_EOI_2",
+      "^": "Closure:1;_box_0,_captured_uri_1,_captured_EOI_2",
       call$0: function() {
         var t1, authStart, t2, t3, $char, lastColon, lastAt, char0, endBracket, hostEnd, t4, hostStart, i, portNumber, digit;
-        t1 = this._core$_box_0;
+        t1 = this._box_0;
         if (J.$eq(t1._captured_index_5, t1._captured_end_0)) {
           t1._captured_char_6 = this._captured_EOI_2;
           return;
@@ -16063,9 +16097,9 @@
       }
     },
     Uri__makeQuery_closure: {
-      "^": "Closure:11;_core$_box_0,_core$_captured_result_1",
+      "^": "Closure:11;_box_0,_core$_captured_result_1",
       call$2: function(key, value) {
-        var t1 = this._core$_box_0;
+        var t1 = this._box_0;
         if (!t1._captured_first_0)
           this._core$_captured_result_1._contents += "&";
         t1._captured_first_0 = false;
@@ -18252,9 +18286,6 @@
         t1 = this._jsObject;
         t2 = args == null ? null : P.List_List$from(J.map$1$ax(args, P._convertToJS$closure()), true, null);
         return P._convertToDart(t1[method].apply(t1, t2));
-      },
-      callMethod$1: function(method) {
-        return this.callMethod$2(method, null);
       }
     },
     JsFunction: {
@@ -20198,7 +20229,7 @@
               t1 = $.get$PLUGINS(), _i = 0;
             case 2:
               // for condition
-              if (!(_i < 3)) {
+              if (!(_i < 5)) {
                 // goto after for
                 $goto = 4;
                 break;
@@ -20241,6 +20272,8 @@
         }
       }
       t1 = table ? "table" : "values";
+      if (params != null)
+        ;
       if (results != null)
         ;
       map = P.LinkedHashMap__makeLiteral(["$invokable", permission, "$result", t1, "$params", params, "$columns", results]);
@@ -20353,6 +20386,88 @@
       call$1: [function(error) {
         this._plugins$_captured_completer_2.completeError$1(error);
       }, null, null, 2, 0, null, 12, "call"]
+    },
+    BatteryPlugin: {
+      "^": "Plugin;",
+      init$0: function() {
+        var batteryNode = L.createValueNode("/Battery/Level", "number", null, null);
+        $.get$context().callMethod$2("addEventListener", ["batterystatus", new L.BatteryPlugin_init_closure(batteryNode)]);
+      }
+    },
+    BatteryPlugin_init_closure: {
+      "^": "Closure:2;_captured_batteryNode_0",
+      call$1: [function(e) {
+        if (typeof e === "number" || typeof e === "string" || typeof e === "boolean" || e == null)
+          H.throwExpression(P.ArgumentError$("object cannot be a num, string, bool, or null"));
+        return this._captured_batteryNode_0.updateValue$1(J.$index$asx(P._wrapToDart(P._convertToJS(e)), "level"));
+      }, null, null, 2, 0, null, 3, "call"]
+    },
+    CompassPlugin: {
+      "^": "Plugin;",
+      init$0: function() {
+        var t1, compass;
+        t1 = {};
+        t1._captured_sub_0 = null;
+        t1._captured_headingNode_1 = null;
+        compass = $.get$context().callMethod$2("eval", ["navigator.compass"]);
+        t1._captured_mid_2 = null;
+        t1._captured_m_3 = null;
+        t1._captured_m_3 = P.StreamController_StreamController$broadcast(new L.CompassPlugin_init_closure(t1, compass), new L.CompassPlugin_init_closure0(t1, compass), false, null);
+        t1._captured_headingNode_1 = L.createValueNode("/Compass/Heading", "number", null, new L.CompassPlugin_init_closure1(t1));
+      }
+    },
+    CompassPlugin_init_closure0: {
+      "^": "Closure:0;_plugins$_box_0,_captured_compass_1",
+      call$0: function() {
+        var t1 = this._plugins$_box_0;
+        t1._captured_mid_2 = this._captured_compass_1.callMethod$2("watchHeading", [new L.CompassPlugin_init__closure0(t1), new L.CompassPlugin_init__closure1()]);
+      }
+    },
+    CompassPlugin_init__closure0: {
+      "^": "Closure:2;_plugins$_box_0",
+      call$1: [function(o) {
+        var t1, t2;
+        t1 = this._plugins$_box_0._captured_m_3;
+        t2 = J.$index$asx(o, "magneticHeading");
+        if (!t1.get$_mayAddEvent())
+          H.throwExpression(t1._addEventError$0());
+        t1._sendData$1(t2);
+        return;
+      }, null, null, 2, 0, null, 46, "call"]
+    },
+    CompassPlugin_init__closure1: {
+      "^": "Closure:2;",
+      call$1: [function(e) {
+        return;
+      }, null, null, 2, 0, null, 3, "call"]
+    },
+    CompassPlugin_init_closure: {
+      "^": "Closure:0;_plugins$_box_0,_captured_compass_2",
+      call$0: function() {
+        this._captured_compass_2.callMethod$2("clearWatch", [this._plugins$_box_0._captured_mid_2]);
+      }
+    },
+    CompassPlugin_init_closure1: {
+      "^": "Closure:2;_plugins$_box_0",
+      call$1: function($status) {
+        var t1, t2;
+        if ($status) {
+          t1 = this._plugins$_box_0;
+          t2 = t1._captured_m_3;
+          t2.toString;
+          t1._captured_sub_0 = H.setRuntimeTypeInfo(new P._BroadcastStream(t2), [H.getTypeArgumentByIndex(t2, 0)]).listen$1(new L.CompassPlugin_init__closure(t1));
+        } else {
+          t1 = this._plugins$_box_0._captured_sub_0;
+          if (t1 != null)
+            t1.cancel$0();
+        }
+      }
+    },
+    CompassPlugin_init__closure: {
+      "^": "Closure:2;_plugins$_box_0",
+      call$1: [function(o) {
+        this._plugins$_box_0._captured_headingNode_1.updateValue$1(o);
+      }, null, null, 2, 0, null, 46, "call"]
     },
     GeolocationPlugin: {
       "^": "Plugin;",
@@ -20490,13 +20605,13 @@
     VibratePlugin: {
       "^": "Plugin;",
       init$0: function() {
-        L.createActionNode("/Vibrate", new L.VibratePlugin_init_closure($.get$context().callMethod$2("eval", ["navigator"])), null, null, "read", null, false);
+        L.createActionNode("/Vibrate", new L.VibratePlugin_init_closure($.get$context().callMethod$2("eval", ["navigator"])), null, P.LinkedHashMap__makeLiteral(["time", "number"]), "read", null, false);
       }
     },
     VibratePlugin_init_closure: {
       "^": "Closure:37;_captured_nav_0",
       call$1: [function(params) {
-        var $goto = 0, completer = new P.Completer_Completer(), handler = 1, currentError, $self = this;
+        var $goto = 0, completer = new P.Completer_Completer(), handler = 1, currentError, $self = this, t1;
         function call$1(errorCode, result) {
           if (errorCode === 1) {
             currentError = result;
@@ -20506,7 +20621,9 @@
             switch ($goto) {
               case 0:
                 // Function start
-                $self._captured_nav_0.callMethod$1("vibrate");
+                t1 = J.getInterceptor$asx(params);
+                t1 = t1.$index(params, "time") == null ? 1000 : J.toInt$0$n(t1.$index(params, "time"));
+                $self._captured_nav_0.callMethod$2("vibrate", [t1]);
                 // implicit return
                 return H.asyncHelper(null, 0, completer, null);
               case 1:
@@ -20892,7 +21009,7 @@
           t1._requester$_controller = Q.BroadcastStreamController$(t1.get$onStartListen(), t1.get$_requester$_onAllCancel(), t1.get$_requester$_onListen(), L.RequesterListUpdate);
           this._listController = t1;
         }
-        return t1._requester$_controller._stream;
+        return t1._requester$_controller._utils$_stream;
       },
       _requester$_subscribe$3: function(requester, callback, cacheLevel) {
         var t1, t2, t3;
@@ -21075,11 +21192,11 @@
         t2.configs.$indexSet(0, "$disconnectedTs", t1);
         t1 = this._requester$_controller;
         t2 = new L.RequesterListUpdate(["$disconnectedTs"], t2, this.request.streamStatus);
-        t3 = t1._controller;
+        t3 = t1._utils$_controller;
         if (t3._state >= 4)
           H.throwExpression(t3._badEventState$0());
         t3._async$_add$1(t2);
-        t1._stream.lastValue = t2;
+        t1._utils$_stream.lastValue = t2;
       },
       onReconnect$0: function() {
         if (this.disconnectTs != null) {
@@ -21215,15 +21332,15 @@
             t1 = this._requester$_controller;
             t2 = this.changes;
             t3 = new L.RequesterListUpdate(t2.toList$0(0), this.node, this.request.streamStatus);
-            t4 = t1._controller;
+            t4 = t1._utils$_controller;
             if (t4._state >= 4)
               H.throwExpression(t4._badEventState$0());
             t4._async$_add$1(t3);
-            t1._stream.lastValue = t3;
+            t1._utils$_stream.lastValue = t3;
             t2.clear$0(0);
           }
           if (J.$eq(this.request.streamStatus, "closed"))
-            this._requester$_controller._controller.close$0(0);
+            this._requester$_controller._utils$_controller.close$0(0);
         }
       },
       onStartListen$0: [function() {
@@ -21248,7 +21365,7 @@
           this.requester.closeRequest$1(t1);
           this.request = null;
         }
-        this._requester$_controller._controller.close$0(0);
+        this._requester$_controller._utils$_controller.close$0(0);
         this.node._listController = null;
       }
     },
@@ -21656,11 +21773,11 @@
       updateList$1: function($name) {
         var t1, t2;
         t1 = this.get$listChangeController();
-        t2 = t1._controller;
+        t2 = t1._utils$_controller;
         if (t2._state >= 4)
           H.throwExpression(t2._badEventState$0());
         t2._async$_add$1($name);
-        t1._stream.lastValue = $name;
+        t1._utils$_stream.lastValue = $name;
       },
       setAttribute$4: ["super$LocalNodeImpl$setAttribute$4", function(_, $name, value, responder, response) {
         var t1, t2;
@@ -21668,11 +21785,11 @@
         if (!t1.containsKey$1(0, $name) || !J.$eq(t1.$index(0, $name), value)) {
           t1.$indexSet(0, $name, value);
           t1 = this.get$listChangeController();
-          t2 = t1._controller;
+          t2 = t1._utils$_controller;
           if (t2._state >= 4)
             H.throwExpression(t2._badEventState$0());
           t2._async$_add$1($name);
-          t1._stream.lastValue = $name;
+          t1._utils$_stream.lastValue = $name;
         }
         response.close$0(0);
         return response;
@@ -21683,11 +21800,11 @@
         if (t1.containsKey$1(0, $name)) {
           t1.remove$1(0, $name);
           t1 = this.get$listChangeController();
-          t2 = t1._controller;
+          t2 = t1._utils$_controller;
           if (t2._state >= 4)
             H.throwExpression(t2._badEventState$0());
           t2._async$_add$1($name);
-          t1._stream.lastValue = $name;
+          t1._utils$_stream.lastValue = $name;
         }
         response.close$0(0);
         return response;
@@ -21699,11 +21816,11 @@
         if (!J.$eq(t1.$index(0, t2), value)) {
           t1.$indexSet(0, t2, value);
           t1 = this.get$listChangeController();
-          t3 = t1._controller;
+          t3 = t1._utils$_controller;
           if (t3._state >= 4)
             H.throwExpression(t3._badEventState$0());
           t3._async$_add$1(t2);
-          t1._stream.lastValue = t2;
+          t1._utils$_stream.lastValue = t2;
         }
         response.close$1(0, null);
         return response;
@@ -21715,11 +21832,11 @@
         if (t1.containsKey$1(0, t2)) {
           t1.remove$1(0, t2);
           t1 = this.get$listChangeController();
-          t3 = t1._controller;
+          t3 = t1._utils$_controller;
           if (t3._state >= 4)
             H.throwExpression(t3._badEventState$0());
           t3._async$_add$1(t2);
-          t1._stream.lastValue = t2;
+          t1._utils$_stream.lastValue = t2;
         }
         response.close$1(0, null);
         return response;
@@ -21733,7 +21850,7 @@
       }, "setValue$3", null, null, "get$setValue", 6, 2, null, 57]
     },
     LocalNodeImpl_load_closure: {
-      "^": "Closure:3;_box_0,_captured_this_1",
+      "^": "Closure:3;_responder$_box_0,_captured_this_1",
       call$2: function(key, value) {
         var t1, node, t2;
         t1 = J.getInterceptor$s(key);
@@ -21743,7 +21860,7 @@
           this._captured_this_1.attributes.$indexSet(0, key, value);
         else if (!!J.getInterceptor(value).$isMap) {
           t1 = this._captured_this_1;
-          node = t1.get$provider().getOrCreateNode$2(H.S(this._box_0._captured_childPathPre_0) + H.S(key), false);
+          node = t1.get$provider().getOrCreateNode$2(H.S(this._responder$_box_0._captured_childPathPre_0) + H.S(key), false);
           t2 = J.getInterceptor(node);
           if (!!t2.$isLocalNodeImpl)
             t2.load$1(node, value);
@@ -21765,7 +21882,7 @@
         return t1;
       },
       get$listStream: function() {
-        return this.get$listChangeController()._stream;
+        return this.get$listChangeController()._utils$_stream;
       },
       onStartListListen$0: [function() {
       }, "call$0", "get$onStartListListen", 0, 0, 1],
@@ -22412,15 +22529,15 @@
       }
     },
     ListResponse_startSendingData_closure: {
-      "^": "Closure:11;_box_0,_captured_this_1,_captured_updateConfigs_2",
+      "^": "Closure:11;_responder$_box_0,_captured_this_1,_captured_updateConfigs_2",
       call$2: function($name, value) {
         var update, t1;
         update = [$name, value];
         t1 = J.getInterceptor($name);
         if (t1.$eq($name, "$is"))
-          this._box_0._captured_updateIs_0 = update;
+          this._responder$_box_0._captured_updateIs_0 = update;
         else if (t1.$eq($name, "$base"))
-          this._box_0._captured_updateBase_1 = update;
+          this._responder$_box_0._captured_updateBase_1 = update;
         else if (this._captured_this_1._permission === 4 || !t1.startsWith$1($name, "$$"))
           this._captured_updateConfigs_2.push(update);
       }
@@ -22910,11 +23027,11 @@
         var t1, t2;
         this.super$Node$addChild$2($name, node);
         t1 = this.get$listChangeController();
-        t2 = t1._controller;
+        t2 = t1._utils$_controller;
         if (t2._state >= 4)
           H.throwExpression(t2._badEventState$0());
         t2._async$_add$1($name);
-        t1._stream.lastValue = $name;
+        t1._utils$_stream.lastValue = $name;
       },
       setAttribute$4: function(_, $name, value, responder, response) {
         this.super$LocalNodeImpl$setAttribute$4(this, $name, value, responder, response);
@@ -22946,11 +23063,11 @@
           $name = this.super$Node$removeChild$1($name);
           if ($name != null) {
             t1 = this.get$listChangeController();
-            t2 = t1._controller;
+            t2 = t1._utils$_controller;
             if (t2._state >= 4)
               H.throwExpression(t2._badEventState$0());
             t2._async$_add$1($name);
-            t1._stream.lastValue = $name;
+            t1._utils$_stream.lastValue = $name;
           }
           return $name;
         } else if (!!J.getInterceptor(value).$isMap) {
@@ -22970,17 +23087,17 @@
         } else {
           this.super$Node$addChild$2($name, value);
           t1 = this.get$listChangeController();
-          t2 = t1._controller;
+          t2 = t1._utils$_controller;
           if (t2._state >= 4)
             H.throwExpression(t2._badEventState$0());
           t2._async$_add$1($name);
-          t1._stream.lastValue = $name;
+          t1._utils$_stream.lastValue = $name;
           return value;
         }
       }
     },
     SimpleNode_load_closure: {
-      "^": "Closure:3;_box_0,_captured_this_1",
+      "^": "Closure:3;_responder$_box_0,_captured_this_1",
       call$2: [function(key, value) {
         var t1 = J.getInterceptor$s(key);
         if (t1.startsWith$1(key, "?")) {
@@ -22991,7 +23108,7 @@
         else if (t1.startsWith$1(key, "@"))
           this._captured_this_1.attributes.$indexSet(0, key, value);
         else if (!!J.getInterceptor(value).$isMap)
-          this._captured_this_1.provider.addNode$2(H.S(this._box_0._captured_childPathPre_0) + H.S(key), value);
+          this._captured_this_1.provider.addNode$2(H.S(this._responder$_box_0._captured_childPathPre_0) + H.S(key), value);
       }, null, null, 4, 0, null, 16, 17, "call"]
     },
     SimpleNode_invoke_closure: {
@@ -23125,9 +23242,9 @@
       }, null, null, 2, 0, null, 17, "call"]
     },
     SimpleNode_invoke__closure: {
-      "^": "Closure:2;_box_0",
+      "^": "Closure:2;_responder$_box_0",
       call$1: function(_) {
-        var t1 = this._box_0._captured_sub_0;
+        var t1 = this._responder$_box_0._captured_sub_0;
         if (t1 != null)
           t1.cancel$0();
       }
@@ -23739,20 +23856,20 @@
       }, null, null, 2, 0, null, 17, "call"]
     },
     BroadcastStreamController: {
-      "^": "Object;_controller,_stream,_onStartListen,_onAllCancel,_listening,_listenState,_delayedCheckCanceling",
-      _onListen$1: [function(subscription) {
+      "^": "Object;_utils$_controller,_utils$_stream,_onStartListen,_onAllCancel,_listening,_listenState,_delayedCheckCanceling",
+      _utils$_onListen$1: [function(subscription) {
         if (!this._listenState) {
           if (this._onStartListen != null)
             this._onStartListen$0();
           this._listenState = true;
         }
         this._listening = true;
-      }, "call$1", "get$_onListen", 2, 0, function() {
+      }, "call$1", "get$_utils$_onListen", 2, 0, function() {
         return H.computeSignature(function(T) {
           return {func: 1, void: true, args: [[P.StreamSubscription, T]]};
         }, this.$receiver, "BroadcastStreamController");
       }, 60],
-      _onCancel$1: [function(subscription) {
+      _utils$_onCancel$1: [function(subscription) {
         this._listening = false;
         if (this._onAllCancel != null) {
           if (!this._delayedCheckCanceling) {
@@ -23761,7 +23878,7 @@
           }
         } else
           this._listenState = false;
-      }, "call$1", "get$_onCancel", 2, 0, function() {
+      }, "call$1", "get$_utils$_onCancel", 2, 0, function() {
         return H.computeSignature(function(T) {
           return {func: 1, void: true, args: [[P.StreamSubscription, T]]};
         }, this.$receiver, "BroadcastStreamController");
@@ -23774,35 +23891,35 @@
         }
       }, "call$0", "get$delayedCheckCancel", 0, 0, 1],
       add$1: function(_, t) {
-        var t1 = this._controller;
+        var t1 = this._utils$_controller;
         if (t1._state >= 4)
           H.throwExpression(t1._badEventState$0());
         t1._async$_add$1(t);
-        this._stream.lastValue = t;
+        this._utils$_stream.lastValue = t;
       },
       close$0: function(_) {
-        return this._controller.close$0(0);
+        return this._utils$_controller.close$0(0);
       },
       get$isPaused: function() {
         var t1, t2;
-        t1 = this._controller;
+        t1 = this._utils$_controller;
         t2 = t1._state;
         return (t2 & 1) !== 0 ? t1.get$_subscription().get$_isInputPaused() : (t2 & 2) === 0;
       },
       BroadcastStreamController$3: function(onStartListen, onAllCancel, onListen, $T) {
         var t1, t2, t3, t4, t5;
-        t1 = H.setRuntimeTypeInfo(new P._ControllerStream(this._controller), [null]);
-        t2 = this.get$_onListen();
-        t3 = this.get$_onCancel();
+        t1 = H.setRuntimeTypeInfo(new P._ControllerStream(this._utils$_controller), [null]);
+        t2 = this.get$_utils$_onListen();
+        t3 = this.get$_utils$_onCancel();
         t4 = H.getRuntimeTypeArgument(t1, "Stream", 0);
         t5 = $.Zone__current;
         t5.toString;
         t5 = H.setRuntimeTypeInfo(new P._AsBroadcastStream(t1, t2, t3, t5, null, null), [t4]);
-        t4 = H.setRuntimeTypeInfo(new P._AsBroadcastStreamController(null, t5.get$_async$_onListen(), t5.get$_async$_onCancel(), 0, null, null, null, null), [t4]);
+        t4 = H.setRuntimeTypeInfo(new P._AsBroadcastStreamController(null, t5.get$_onListen(), t5.get$_onCancel(), 0, null, null, null, null), [t4]);
         t4._async$_previous = t4;
         t4._async$_next = t4;
-        t5._async$_controller = t4;
-        this._stream = H.setRuntimeTypeInfo(new Q.CachedStreamWrapper(null, t5, onListen), [null]);
+        t5._controller = t4;
+        this._utils$_stream = H.setRuntimeTypeInfo(new Q.CachedStreamWrapper(null, t5, onListen), [null]);
         this._onStartListen = onStartListen;
         this._onAllCancel = onAllCancel;
       },
@@ -23819,42 +23936,42 @@
         }}
     },
     CachedStreamWrapper: {
-      "^": "Object;lastValue,_stream,_onListen",
+      "^": "Object;lastValue,_utils$_stream,_utils$_onListen",
       contains$1: function(_, needle) {
-        return this._stream.contains$1(0, needle);
+        return this._utils$_stream.contains$1(0, needle);
       },
       forEach$1: function(_, action) {
-        return this._stream.forEach$1(0, action);
+        return this._utils$_stream.forEach$1(0, action);
       },
       get$isEmpty: function(_) {
-        var t1 = this._stream;
+        var t1 = this._utils$_stream;
         return t1.get$isEmpty(t1);
       },
       get$last: function(_) {
-        var t1 = this._stream;
+        var t1 = this._utils$_stream;
         return t1.get$last(t1);
       },
       get$length: function(_) {
-        var t1 = this._stream;
+        var t1 = this._utils$_stream;
         return t1.get$length(t1);
       },
       listen$4$cancelOnError$onDone$onError: function(onData, cancelOnError, onDone, onError) {
-        if (this._onListen != null)
-          this._onListen$1(onData);
-        return this._stream.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError);
+        if (this._utils$_onListen != null)
+          this._utils$_onListen$1(onData);
+        return this._utils$_stream.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError);
       },
       listen$1: function(onData) {
         return this.listen$4$cancelOnError$onDone$onError(onData, null, null, null);
       },
       map$1: function(_, convert) {
-        var t1 = this._stream;
+        var t1 = this._utils$_stream;
         return H.setRuntimeTypeInfo(new P._MapStream(convert, t1), [H.getRuntimeTypeArgument(t1, "Stream", 0), null]);
       },
       toList$0: function(_) {
-        return this._stream.toList$0(0);
+        return this._utils$_stream.toList$0(0);
       },
-      _onListen$1: function(arg0) {
-        return this._onListen.call$1(arg0);
+      _utils$_onListen$1: function(arg0) {
+        return this._utils$_onListen.call$1(arg0);
       },
       $isStream: 1
     },
@@ -24187,9 +24304,7 @@
         if ($.hierarchicalLoggingEnabled || this.parent == null) {
           var t1 = this._logging$_controller;
           if (t1 == null) {
-            t1 = H.setRuntimeTypeInfo(new P._SyncBroadcastStreamController(null, null, 0, null, null, null, null), [N.LogRecord]);
-            t1._async$_previous = t1;
-            t1._async$_next = t1;
+            t1 = P.StreamController_StreamController$broadcast(null, null, true, N.LogRecord);
             this._logging$_controller = t1;
           }
           t1.toString;
@@ -25200,7 +25315,7 @@
   }, "invalidChar", "ValueUpdate_TIME_ZONE", "get$ValueUpdate_TIME_ZONE", function() {
     return new O.closure().call$0();
   }, "TIME_ZONE", "PLUGINS", "get$PLUGINS", function() {
-    return [new L.BarcodeScannerPlugin(), new L.GeolocationPlugin(), new L.VibratePlugin()];
+    return [new L.BarcodeScannerPlugin(), new L.GeolocationPlugin(), new L.VibratePlugin(), new L.CompassPlugin(), new L.BatteryPlugin()];
   }, "PLUGINS", "_CRYPTO_PROVIDER", "get$_CRYPTO_PROVIDER", function() {
     return $.get$DartCryptoProvider_INSTANCE();
   }, "_CRYPTO_PROVIDER", "_secp256r1", "get$_secp256r1", function() {
