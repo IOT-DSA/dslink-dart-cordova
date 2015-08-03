@@ -20271,6 +20271,14 @@
           results.push(P.LinkedHashMap__makeLiteral(["name", k, "type", m.$index(0, k)]));
         }
       }
+      if (!!J.getInterceptor(params).$isMap) {
+        m = P.LinkedHashMap_LinkedHashMap$from(params, null, null);
+        params = [];
+        for (t1 = H.setRuntimeTypeInfo(new H.LinkedHashMapKeyIterable(m), [H.getTypeArgumentByIndex(m, 0)])._map, t2 = new H.LinkedHashMapKeyIterator(t1, t1._modifications, null, null), t2._cell = t1._first; t2.moveNext$0();) {
+          k = t2.__js_helper$_current;
+          params.push(P.LinkedHashMap__makeLiteral(["name", k, "type", m.$index(0, k)]));
+        }
+      }
       t1 = table ? "table" : "values";
       if (params != null)
         ;
@@ -20605,7 +20613,7 @@
     VibratePlugin: {
       "^": "Plugin;",
       init$0: function() {
-        L.createActionNode("/Vibrate", new L.VibratePlugin_init_closure($.get$context().callMethod$2("eval", ["navigator"])), null, P.LinkedHashMap__makeLiteral(["time", "number"]), "read", null, false);
+        L.createActionNode("/Vibration/Vibrate", new L.VibratePlugin_init_closure($.get$context().callMethod$2("eval", ["navigator"])), null, P.LinkedHashMap__makeLiteral(["time", "number"]), "read", null, false);
       }
     },
     VibratePlugin_init_closure: {

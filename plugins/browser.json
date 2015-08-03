@@ -11,6 +11,10 @@
                         {
                             "xml": "<feature name=\"Device\"><param name=\"browser-package\" value=\"Device\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"browser-package\" value=\"BarcodeScanner\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -18,9 +22,6 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-barcodescanner": {
-            "PACKAGE_NAME": "org.iot.dsa"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "org.iot.dsa"
         },
@@ -40,6 +41,9 @@
             "PACKAGE_NAME": "org.iot.dsa"
         },
         "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
         }
     },

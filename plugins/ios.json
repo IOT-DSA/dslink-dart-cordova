@@ -19,14 +19,24 @@
                             "count": 1
                         }
                     ],
-                    "AssetsLibrary.framework": [],
+                    "AssetsLibrary.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
                     "CoreVideo.framework": [
                         {
                             "xml": false,
                             "count": 1
                         }
                     ],
-                    "QuartzCore.framework": [],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
                     "CoreLocation.framework": [
                         {
                             "xml": false,
@@ -66,16 +76,30 @@
                             "xml": false,
                             "count": 1
                         }
+                    ],
+                    "CoreGraphics.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreImage.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
                     ]
                 }
             },
             "config.xml": {
                 "parents": {
                     "/*": [
-                        {
-                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-                            "count": 1
-                        },
                         {
                             "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
@@ -99,6 +123,10 @@
                         {
                             "xml": "<feature name=\"Battery\"><param name=\"ios-package\" value=\"CDVBattery\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -116,9 +144,6 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-barcodescanner": {
-            "PACKAGE_NAME": "org.iot.dsa"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "org.iot.dsa"
         },
@@ -138,6 +163,9 @@
             "PACKAGE_NAME": "org.iot.dsa"
         },
         "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
         }
     },

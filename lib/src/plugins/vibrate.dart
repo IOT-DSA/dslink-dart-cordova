@@ -5,7 +5,7 @@ class VibratePlugin extends Plugin {
   init() {
     var nav = loadJsObject("navigator");
 
-    createActionNode("/Vibrate", (Map<String, dynamic> params) async {
+    createActionNode("/Vibration/Vibrate", (Map<String, dynamic> params) async {
       nav.callMethod("vibrate", [
         params["time"] == null ? 1000 : params["time"].toInt()
       ]);

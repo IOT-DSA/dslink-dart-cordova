@@ -66,6 +66,17 @@ SimpleActionNode createActionNode(String path, handler(Map<String, dynamic> para
     }
   }
 
+  if (params is Map) {
+    var m = new Map.from(params);
+    params = [];
+    for (var k in m.keys) {
+      params.add({
+        "name": k,
+        "type": m[k]
+      });
+    }
+  }
+
   var map = {
     r"$invokable": permission,
     r"$result": table ? "table" : "values",

@@ -19,3 +19,4 @@ platforms/ios
 plugins/cordova-*
 plugins/com.*
 plugins/org.*
+plugins/phonegap-*
