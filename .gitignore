@@ -20,3 +20,4 @@ plugins/cordova-*
 plugins/com.*
 plugins/org.*
 plugins/phonegap-*
+plugins/es6-*

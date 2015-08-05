@@ -45,7 +45,20 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-geofence": {
+            "PACKAGE_NAME": "org.iot.dsa"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-android-support-v4": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-googleplayservices": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        }
+    }
 }

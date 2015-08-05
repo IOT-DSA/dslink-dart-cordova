@@ -127,6 +127,10 @@
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"GeofencePlugin\"><param name=\"ios-package\" value=\"HWPGeofencePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -136,6 +140,22 @@
                     "NSLocationWhenInUseUsageDescription": [
                         {
                             "xml": "<string />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<string>${EXECUTABLE_NAME} Would Like to Use Your Current Location When In Use.</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationAlwaysUsageDescription": [
+                        {
+                            "xml": "<string>${EXECUTABLE_NAME} Would Like to Use Your Current Location Even In Background.</string>",
+                            "count": 1
+                        }
+                    ],
+                    "UIBackgroundModes": [
+                        {
+                            "xml": "<array><string>location</string><string>remote-notification</string></array>",
                             "count": 1
                         }
                     ]
@@ -167,10 +187,22 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-geofence": {
+            "PACKAGE_NAME": "org.iot.dsa"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-webserver": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-android-support-v4": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-googleplayservices": {
             "PACKAGE_NAME": "org.iot.dsa"
         }
     }

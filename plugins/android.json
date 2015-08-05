@@ -33,6 +33,18 @@
                         {
                             "xml": "<activity android:label=\"@string/share_name\" android:name=\"com.google.zxing.client.android.HelpActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<meta-data android:name=\"com.google.android.gms.version\" android:value=\"@integer/google_play_services_version\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<service android:exported=\"false\" android:label=\"@string/app_name\" android:name=\"com.cowbell.cordova.geofence.ReceiveTransitionsIntentService\"></service>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<receiver android:name=\"com.cowbell.cordova.geofence.BootReceiver\"><intent-filter><action android:name=\"android.intent.action.BOOT_COMPLETED\" /></intent-filter></receiver>",
+                            "count": 1
                         }
                     ],
                     "/manifest": [
@@ -46,6 +58,26 @@
                         },
                         {
                             "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 1
                         }
                     ]
@@ -562,6 +594,16 @@
                         }
                     ]
                 }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"GeofencePlugin\"><param name=\"android-package\" value=\"com.cowbell.cordova.geofence.GeofencePlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
@@ -589,7 +631,20 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-geofence": {
+            "PACKAGE_NAME": "org.iot.dsa"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-android-support-v4": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        },
+        "cordova-plugin-googleplayservices": {
+            "PACKAGE_NAME": "org.iot.dsa"
+        }
+    }
 }
